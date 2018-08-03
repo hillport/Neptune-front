@@ -1,0 +1,22 @@
+<!doctype html>
+<html lang="{{ locale }}">
+<head>
+    <meta charset="utf-8"/>
+    <title></title>
+    <meta name="Description" content=""/>
+    <meta name="Keywords" content=""/>
+    <meta name="viewport" content="width=device-width"/>
+</head>
+
+<body class="">
+    {% block content %}
+    {% endblock %}
+<script>
+    let deps = [
+        
+        {% block dep %}
+        {% endblock dep %}
+    ];
+</script>
+</body>
+</html>
