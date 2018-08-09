@@ -1,0 +1,39 @@
+.texte_seul {
+  color:#fff;
+  background:#70716c;
+  .left {
+    max-width: 40rem;
+    img {
+      display: block;
+      width:100%;
+    }
+  }
+  .right {
+    padding:5rem;
+    position: relative;
+    > .box{
+      padding-left: 3em;
+      position: relative;
+      ::before{
+        content:'';
+        display: block;
+        position: absolute;
+        left:0;
+        top:50%;
+        height:140%;
+        width:0.7em;
+        background: red;
+        transform:translate(0,-50%);
+      }
+      h2 {
+        text-transform: uppercase;
+        margin-bottom: 3rem;
+      }
+      p{
+        max-width: 70%;
+        display: block;
+        color:#adadad;
+      }
+    }
+  }
+}

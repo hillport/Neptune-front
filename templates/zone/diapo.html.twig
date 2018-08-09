@@ -1,0 +1,16 @@
+<div class="diapo_fin flex">
+    <div class="mw35 left text_right relative flex align_content_right">
+        <div class="box relative">
+            <img src="{{ asset('img/logo_diapo.png') }}" alt="Logo Omega Corse" class="block absolute top0 h100"/>
+        </div>
+    </div>
+    <div class="w60">
+        {% for photo in zone.photos %}
+            <div class="photo relative" data-id="{{ photo.id }}">
+                <span class="flex justify_center absolute left0 top0 w100 h100">
+                    <img src="{{ asset('uploads/'~ photo.path) | thumb(1000) }}" alt="{{ zone.name }}" class="object-fit"/>
+                </span>
+            </div>
+        {% endfor %}
+    </div>
+</div>

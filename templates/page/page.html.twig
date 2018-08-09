@@ -1,0 +1,10 @@
+{% extends 'layout.html.twig' %}
+{% block content %}
+    {% for zone in page.zones %}
+        {% if file_exist(templates_root~'/zone/'~zone.type.name~'.html.twig') %}
+            {% include 'zone/'~(zone.type.name | lower )~'.html.twig' %}
+        {% else %}
+            {{ dump('ERROR : '~templates_root~'/zone/'~zone.type.name~'.html.twig  --> Nexiste pas ') }}
+        {% endif %}
+    {% endfor %}
+{% endblock %}

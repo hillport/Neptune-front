@@ -8,10 +8,14 @@ parameters:
     uploads_directory: '%kernel.project_dir%/public/uploads/'
     langs: ['fr','en','ru','de']
 
-
+stof_doctrine_extensions:
+    orm:
+        default:
+            sluggable: true
 twig:
     globals:
         locale: '%locale%'
+        templates_root: '%kernel.project_dir%/templates'
 framework:
     templating:
         engines: ["twig"]

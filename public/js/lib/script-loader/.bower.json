@@ -1,0 +1,43 @@
+{
+  "name": "script-loader",
+  "description": "Script loading without callbacks",
+  "main": [
+    "dist/load_script.js"
+  ],
+  "dependencies": {},
+  "devDependencies": {},
+  "moduleType": [
+    "javascript"
+  ],
+  "keywords": [
+    "chargement",
+    "charge",
+    "javascript",
+    "css",
+    "loading",
+    "async"
+  ],
+  "authors": [
+    "Santanas2b santanas2b@gmail.com"
+  ],
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "private": false,
+  "homepage": "https://github.com/santanas2b/script-loader",
+  "_release": "104bc564a6",
+  "_resolution": {
+    "type": "branch",
+    "branch": "master",
+    "commit": "104bc564a641856676fde04e77d0b27114a4318c"
+  },
+  "_source": "https://github.com/santanas2b/script-loader.git",
+  "_target": "*",
+  "_originalSource": "santanas2b/script-loader",
+  "_direct": true
+}

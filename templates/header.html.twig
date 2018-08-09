@@ -1,0 +1,30 @@
+{% import _self as recursiveMacro %}
+{% macro recursivePage(page) %}
+    {% import _self as self %}
+    {% if page.remove == 0 %}
+        <li>
+
+            <a href="{{ page.url('fr').url }}">
+                {{ page.name}}
+            </a>
+
+            {% if page.childs |length %}
+                <ul class="sub_menu">
+                    {% for child in page.childs %}
+                        {{ self.recursivePage(child) }}
+                    {% endfor %}
+                </ul>
+            {% endif %}
+        </li>
+    {% endif %}
+{% endmacro %}
+<header>
+    <nav>
+        <ul id="menu">
+            {% for page in pages %}
+                {{ recursiveMacro.recursivePage(page) }}
+            {% endfor %}
+        </ul>
+
+    </nav>
+</header>

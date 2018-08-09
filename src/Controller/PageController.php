@@ -28,7 +28,11 @@ class PageController extends Controller
             ),
             ['prio'=>'ASC']
         );
+        $page = $pages[0];
 
-        return $this->render('page/index.html.twig');
+        return $this->render('page/page.html.twig',array('pages'=>$pages,'page'=>$page));
+    }
+    public function pageAction(){
+
     }
 }

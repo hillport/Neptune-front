@@ -1,0 +1,12 @@
+{
+    "name": "santanas2b/script-loader",
+    "description": "Script Js / Css loading without callbacks",
+    "type": "library",
+    "authors": [
+        {
+            "name": "santanas2b",
+            "email": "santanas2b@gmail.com"
+        }
+    ],
+    "require": {}
+}
