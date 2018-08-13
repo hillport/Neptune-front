@@ -1,0 +1,23 @@
+<section class="zone lien">
+    <div class="w80 flex">
+        <div class="left flex flex_column justify_center">
+            <div class="box w100 justify_center flex flex_column">
+                <div class="flex_0 w100 content flex">
+                    <div class="flex_0 final_content">
+                        <h2 class="block">{{ zone.detail(locale).title }}</h2>
+                        <p class="block">{{ zone.detail(locale).description }}</p>
+                        <a href="" class="block"><img src="{{ asset('img/fleche.png') }}"/></a>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+        <div class="right relative">
+            {% if zone.photos.count > 0 %}
+                <div class="photo"  data-id="{{ zone.photos.0.id }}">
+                    <img src="{{ (asset('uploads/') ~ zone.photos.0.path) | thumb(1000) }}" alt="{{ zone.detail(locale).title }}"/>
+                </div>
+            {% endif %}
+        </div>
+    </div>
+</section>

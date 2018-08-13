@@ -1,5 +1,5 @@
 
-
+{% trans_default_domain 'app' %}
 <!doctype html>
 <html lang="{{ locale }}">
 <head>
@@ -10,7 +10,7 @@
     <meta name="viewport" content="width=device-width"/>
     {# Transformer les fichiers less en fichier css a la mise en ligne#}
     <link rel="stylesheet" href="{{ asset('css/structure.css') }}"/>
-    <link rel="stylesheet/less" href="{{ asset('css/base.less') }}?v={{ random() }}"/>
+    <link rel="stylesheet/less" href="{{ asset('css/style.less') }}?v={{ random() }}"/>
 
     {# Script LESS EN DEV . A enlever en prod #}
     <script src="{{ asset('js/lib/less.min.js') }}"></script>
@@ -24,8 +24,11 @@
     {% include 'header.html.twig' %}
     {% block content %}
     {% endblock %}
-    <script>
-        let root = "{{ asset('') }}";
+    {% include 'rs.html.twig' %}
+    {% include 'footer.html.twig' %}
+    <script type="text/javascript">
+        var root = "{{ asset('') }}";
+        console.log(root);
         let dependances = [
             "{{ asset('js/lib/jquery/jquery.min.js') }}",
             "{{ asset('js/edc.js') }}"
