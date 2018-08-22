@@ -9,7 +9,9 @@
 namespace App\Controller;
 
 
+use ScyLabs\NeptuneBundle\Entity\Infos;
 use ScyLabs\NeptuneBundle\Entity\Page;
+use ScyLabs\NeptuneBundle\Entity\Partner;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -30,7 +32,10 @@ class PageController extends Controller
         );
         $page = $pages[0];
 
-        return $this->render('page/page.html.twig',array('pages'=>$pages,'page'=>$page));
+        $infos = $em->getRepository(Infos::class)->findOneBy([],['id'=>'ASC']);
+        $partners = $em->getRepository(Partner::class)->findAll();
+
+        return $this->render('page/home.html.twig',array('pages'=>$pages,'page'=>$page,'infos'=>$infos,'partners'=>$partners));
     }
     public function pageAction(){
 

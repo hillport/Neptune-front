@@ -3,9 +3,8 @@
     {% import _self as self %}
     {% if page.remove == 0 %}
         <li>
-
-            <a href="{{ page.url('fr').url }}">
-                {{ page.name}}
+            <a href="{{ page.url(locale).url }}">
+                {{ page.detail(locale).name}}
             </a>
 
             {% if page.childs |length %}
@@ -19,12 +18,32 @@
     {% endif %}
 {% endmacro %}
 <header>
-    <nav>
-        <ul id="menu">
+    <div class="logo">
+        <img src="{{ asset('img/logo.png') | thumb(70) }}"/>
+    </div>
+    <nav class="flex">
+        <div class="box_photo">
+            <div class="photo">
+                <img src="{{ asset('img/menu.jpg') }}" alt="Photo menu"/>
+            </div>
+        </div>
+        <ul id="menu" class="flex flex_column justify_center    ">
             {% for page in pages %}
                 {{ recursiveMacro.recursivePage(page) }}
             {% endfor %}
         </ul>
-
+        <ul class="rs">
+            <li><a href="{{ infos.facebook }}"><i class="fab fa-facebook-f centerXY"></i></a></li>
+            <li><a href="{{ infos.twitter }}"><i class="fab fa-twitter centerXY"></i></a></li>
+        </ul>
     </nav>
+
+    <div class="btn_menu absolute">
+        <span class="title">Menu</span>
+        <span class="barres">
+            <i class="left" aria-hidden="true"></i>
+            <i class="center" aria-hidden="true"></i>
+            <i class="right" aria-hidden="true"></i>
+        </span>
+    </div>
 </header>

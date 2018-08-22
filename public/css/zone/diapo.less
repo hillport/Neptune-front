@@ -1,7 +1,35 @@
 .diapo_fin{
+  padding-bottom: 7rem;
+  z-index: 1;
+  position: relative;
+  .right{
+    position: relative;
+    &::before,&::after{
+      content:'';
+      display: block;
+      position: absolute;
+      bottom:0;
+      left:0;
+      z-index: 5;
+      transform:translate(-110%,110%);
+    }
+    &::before{
+      width:3rem;
+      height:3rem;
+      border:1px solid rgba(0, 0, 0, 0.15);
+      border-bottom-color: transparent;
+      border-left-color: transparent;
+    }
+    &::after{
+      background: #fff;
+      width:1rem;
+      height:1rem;
+    }
+  }
   .photo {
     padding-top: 40%;
   }
+
   .left {
     padding: 5rem 0;
     z-index: 2;
@@ -11,5 +39,14 @@
     img{
       right:5rem;
     }
+  }
+  .adherer {
+    position: absolute;
+    left:0;bottom:5rem;padding:1rem 3rem;
+    text-transform: uppercase;
+    color: #ffffff;
+    background:#e73d3d;
+    letter-spacing: 0.2rem;
+    display: block;
   }
 }
