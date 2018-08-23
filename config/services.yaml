@@ -14,7 +14,6 @@ stof_doctrine_extensions:
             sluggable: true
 twig:
     globals:
-        locale: '%locale%'
         templates_root: '%kernel.project_dir%/templates'
 framework:
     templating:

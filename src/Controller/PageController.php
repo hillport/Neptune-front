@@ -11,9 +11,12 @@ namespace App\Controller;
 
 use ScyLabs\NeptuneBundle\Entity\Infos;
 use ScyLabs\NeptuneBundle\Entity\Page;
+use ScyLabs\NeptuneBundle\Entity\PageUrl;
 use ScyLabs\NeptuneBundle\Entity\Partner;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpKernel\Exception\HttpException;
 use Symfony\Component\Routing\Annotation\Route;
 
 class PageController extends Controller
@@ -35,9 +38,42 @@ class PageController extends Controller
         $infos = $em->getRepository(Infos::class)->findOneBy([],['id'=>'ASC']);
         $partners = $em->getRepository(Partner::class)->findAll();
 
-        return $this->render('page/home.html.twig',array('pages'=>$pages,'page'=>$page,'infos'=>$infos,'partners'=>$partners));
+        $params = array('pages'=>$pages,'page'=>$page,'infos'=>$infos,'partners'=>$partners,'locale'=>'fr');
+        return $this->render('page/home.html.twig',$params);
     }
-    public function pageAction(){
 
+    /**
+     * @Route("/{_locale}/{slug}",name="page",requirements={"slug"="^(?!admin|produit|product)[a-z-_0-9/]+$","_locale"="[a-z]{2}"})
+     */
+    public function pageAction(Request $request,$slug){
+        $em = $this->getDoctrine()->getManager();
+        $url = $em->getRepository(PageUrl::class)->findOneBy(array(
+            'url' => $slug
+        ));
+
+        if($url === null)
+            throw new HttpException(404,'Page non trouvée');
+
+
+        $page = $url->getPage();
+        $pages = $em->getRepository(Page::class)->findBy(array(
+            'parent'    =>  null,
+            'remove'    =>  false,
+            ),
+            ['prio'=>'ASC']
+        );
+
+
+        $infos = $em->getRepository(Infos::class)->findOneBy([],['id'=>'ASC']);
+        $partners = $em->getRepository(Partner::class)->findAll();
+
+        $params = array('pages'=>$pages,'page'=>$page,'infos'=>$infos,'partners'=>$partners,'locale'=>$request->getLocale());
+
+
+        if(file_exists($this->getParameter('kernel.project_dir').'/templates/page/'.$page->getType()->getName().'.html.twig')){
+            return $this->render('page/'.$page->getType()->getName().'.html.twig',$params);
+        }
+
+        return $this->render('page/page.html.twig',$params);
     }
 }

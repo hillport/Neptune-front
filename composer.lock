@@ -120,16 +120,16 @@
         },
         {
             "name": "doctrine/cache",
-            "version": "v1.7.1",
+            "version": "v1.8.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/doctrine/cache.git",
-                "reference": "b3217d58609e9c8e661cd41357a54d926c4a2a1a"
+                "reference": "d768d58baee9a4862ca783840eca1b9add7a7f57"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/doctrine/cache/zipball/b3217d58609e9c8e661cd41357a54d926c4a2a1a",
-                "reference": "b3217d58609e9c8e661cd41357a54d926c4a2a1a",
+                "url": "https://api.github.com/repos/doctrine/cache/zipball/d768d58baee9a4862ca783840eca1b9add7a7f57",
+                "reference": "d768d58baee9a4862ca783840eca1b9add7a7f57",
                 "shasum": ""
             },
             "require": {
@@ -140,8 +140,9 @@
             },
             "require-dev": {
                 "alcaeus/mongo-php-adapter": "^1.1",
+                "doctrine/coding-standard": "^4.0",
                 "mongodb/mongodb": "^1.1",
-                "phpunit/phpunit": "^5.7",
+                "phpunit/phpunit": "^7.0",
                 "predis/predis": "~1.0"
             },
             "suggest": {
@@ -150,7 +151,7 @@
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "1.7.x-dev"
+                    "dev-master": "1.8.x-dev"
                 }
             },
             "autoload": {
@@ -185,12 +186,12 @@
                 }
             ],
             "description": "Caching library offering an object-oriented API for many cache backends",
-            "homepage": "http://www.doctrine-project.org",
+            "homepage": "https://www.doctrine-project.org",
             "keywords": [
                 "cache",
                 "caching"
             ],
-            "time": "2017-08-25T07:02:50+00:00"
+            "time": "2018-08-21T18:01:43+00:00"
         },
         {
             "name": "doctrine/collections",
@@ -2295,12 +2296,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/ScyLabs/NeptuneBundle.git",
-                "reference": "f4a88c09028d0116464e7c79153056dd38162d28"
+                "reference": "3cee0bc69d9343cd796f699fe2fdabb0f3181f8b"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/ScyLabs/NeptuneBundle/zipball/f4a88c09028d0116464e7c79153056dd38162d28",
-                "reference": "f4a88c09028d0116464e7c79153056dd38162d28",
+                "url": "https://api.github.com/repos/ScyLabs/NeptuneBundle/zipball/3cee0bc69d9343cd796f699fe2fdabb0f3181f8b",
+                "reference": "3cee0bc69d9343cd796f699fe2fdabb0f3181f8b",
                 "shasum": ""
             },
             "require": {
@@ -2330,7 +2331,7 @@
             "keywords": [
                 "User management"
             ],
-            "time": "2018-08-21T12:50:29+00:00"
+            "time": "2018-08-23T13:49:45+00:00"
         },
         {
             "name": "sensio/framework-extra-bundle",

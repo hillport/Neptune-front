@@ -1,22 +1,26 @@
 {% import _self as recursiveMacro %}
-{% macro recursivePage(page) %}
+{% macro recursivePage(page,locale) %}
     {% import _self as self %}
     {% if page.remove == 0 %}
+
         <li>
-            <a href="{{ page.url(locale).url }}">
-                {{ page.detail(locale).name}}
+            <a href="{% if page.url(locale) is not null%}
+                {{ path('page',{'_locale':locale,'slug':page.url(locale).url}) }}
+            {% endif %}">
+                {{  page.detail(locale).name}}
             </a>
 
             {% if page.childs |length %}
                 <ul class="sub_menu">
                     {% for child in page.childs %}
-                        {{ self.recursivePage(child) }}
+                        {{ self.recursivePage(child,locale) }}
                     {% endfor %}
                 </ul>
             {% endif %}
         </li>
     {% endif %}
 {% endmacro %}
+
 <header>
     <div class="logo">
         <img src="{{ asset('img/logo.png') | thumb(70) }}"/>
@@ -29,7 +33,7 @@
         </div>
         <ul id="menu" class="flex flex_column justify_center    ">
             {% for page in pages %}
-                {{ recursiveMacro.recursivePage(page) }}
+                {{  recursiveMacro.recursivePage(page,locale) }}
             {% endfor %}
         </ul>
         <ul class="rs">
