@@ -6,7 +6,7 @@
 parameters:
     locale: 'fr'
     uploads_directory: '%kernel.project_dir%/public/uploads/'
-    langs: ['fr','en','ru','de']
+    langs: ['fr','en']
 
 stof_doctrine_extensions:
     orm:

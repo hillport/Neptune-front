@@ -57,7 +57,7 @@ $.fn.chargePhoto = function(param){
                 // Est-ce que il y a un data-nom ?
                 var und = (typeof(nom) != 'undefined' && nom.trim() != '');
                 /* Redéfinition de l'URL pour l'envoyer , se référer au htaccess*/
-                var url = root+"photos/"+id+'/'+w;
+                var url = root+"photo/"+id+'/'+w;
                 if(h > 0) {url += '/'+h; }
                 else if((h == 0 || h == '' ) && $this.hasClass('noratio') || und) {url += '/0'; }
 
@@ -75,7 +75,6 @@ $.fn.chargePhoto = function(param){
                     $this.css("opacity", 1);
                 }
                 else{
-                    $this.find('img').css('opacity','0');
                     $this.find("img").attr("src", url);
                     $this.find("img").on('load', function ()
                     {
@@ -83,8 +82,6 @@ $.fn.chargePhoto = function(param){
                         {
                             $('.masonry').masonry('layout');
                         }
-
-
                         $this.find("img").css({"opacity": "1"});
                     });
                 }
@@ -317,6 +314,7 @@ if($('#g-recaptcha').length ||$('.g-recaptcha').length)
     scripts.push("https://www.google.com/recaptcha/api.js?hl="+lang_get)
 }
 
+$('.photo').chargePhoto();
 $.edc.loadScript(scripts);
 
 

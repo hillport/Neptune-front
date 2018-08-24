@@ -1,0 +1,77 @@
+{% trans_default_domain 'app' %}
+<!doctype html>
+<html lang="">
+<head>
+    <meta charset="utf-8"/>
+    <title></title>
+    <meta name="Description" content=""/>
+    <meta name="Keywords" content=""/>
+    <meta name="viewport" content="width=device-width"/>
+    {# Transformer les fichiers less en fichier css a la mise en ligne#}
+    <link rel="stylesheet" href="{{ asset('css/structure.css') }}"/>
+    <link rel="stylesheet/less" href="{{ asset('css/style.less') }}?v={{ random() }}"/>
+
+    {# Script LESS EN DEV . A enlever en prod #}
+    <script src="{{ asset('js/lib/less.min.js') }}"></script>
+    <script>less = { useFileCache: false }</script>
+    {# Enlever en prod #}
+    {% block css %}
+    {% endblock css %}
+</head>
+
+<body class="">
+
+
+{{ form_start(form) }}
+{% for widget in form %}
+    <div class="form-group">
+        {% if widget.vars.block_prefixes[1] != 'hidden' %}
+            <label class="block">
+                {{ form_label(widget) }}
+
+                {% if widget.vars.name == "type" %}
+                    {% set fullname = widget.vars.full_name %}
+                    {% set href = path('admin_type_add',{'type':app.request.attributes.get('type')}) %}
+                    {% if fullname == "page_form[type]"  %}
+                        {% if is_granted('ROLE_SUPER_ADMIN') %}
+                            <a href="{{ href }}"><i class="fa fa-plus text-success m-l-5"></i> </a>
+                        {% endif %}
+                    {% else %}
+                        <a href="{{ href }}"><i class="fa fa-plus text-success m-l-5"></i> </a>
+                    {% endif %}
+
+                {% endif %}
+            </label>
+        {% endif %}
+        {% if widget.vars.block_prefixes[1] == 'choice'%}
+            {% set select2 = ' select2' %}
+        {% else %}
+            {% set select2 = '' %}
+        {% endif %}
+
+        {{ form_widget(widget,{'attr':{'class':'form-control'~select2}}) }}
+
+        {% if widget.vars.block_prefixes[1] != 'submit' and widget.vars.block_prefixes[1] != 'hidden' %}
+            {{ form_errors(widget) }}
+        {% endif %}
+    </div>
+{% endfor %}
+{{ form_rest(form) }}
+{{ form_errors(form) }}
+{{ form_end(form) }}
+
+
+<script type="text/javascript">
+    var root = "{{ asset('') }}";
+    console.log(root);
+    let dependances = [
+        "{{ asset('js/lib/jquery/jquery.min.js') }}",
+        "{{ asset('js/edc.js') }}",
+        "{{ asset('js/header.js') }}",
+        {% block dep %}
+        {% endblock dep %}
+    ];
+</script>
+<script src="{{ asset('js/load.js') }}" type="text/javascript"></script>
+</body>
+</html>

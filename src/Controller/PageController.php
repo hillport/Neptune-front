@@ -52,7 +52,20 @@ class PageController extends Controller
         ));
 
         if($url === null)
-            throw new HttpException(404,'Page non trouvée');
+            return $this->redirectToRoute('homepage');
+
+        if($url->getLang() !== $request->getLocale()){
+            $url = $em->getRepository(PageUrl::class)->findOneBy(
+                array(
+                    'lang'  => $request->getLocale(),
+                    'page'  => $url->getPage()
+                )
+            );
+            if($url === null){
+                return $this->redirectToRoute('homepage');
+            }
+            return $this->redirectToRoute('page',array('_locale'=>$request->getLocale(),'slug' => $url->getUrl()));
+        }
 
 
         $page = $url->getPage();
