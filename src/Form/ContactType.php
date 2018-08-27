@@ -2,7 +2,9 @@
 
 namespace App\Form;
 
+use App\Entity\ContactRequest;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
@@ -26,12 +28,29 @@ class ContactType extends AbstractType
                     "M"             =>  "Mr",
                     "Mme"           =>  "Mme",
                 )
+            ));
+            if($options['action'] !== null){
+                $builder->setAction($options['action']);
+            }
+
+            $builder->add('name',TextType::class,array(
+                'label'             =>  'Nom',
+                'constraints'       => array(
+                    new NotBlank()
+                )
             ))
-            ->add('name',TextType::class,array(
-                'label'     =>  'Nom'
+            ->add('adress',TextType::class,array(
+                'label' => 'Adresse',
+                'mapped'    => false,
+                'constraints'   => array(
+                    new NotBlank(),
+                )
             ))
             ->add('firstName',TextType::class,array(
-                'label'     => 'Prénom'
+                'label'             =>  'Prénom',
+                'constraints'       =>  array(
+                    new NotBlank()
+                )
             ))
             ->add('email',EmailType::class,array(
                 'label'         => 'E-mail',
@@ -46,6 +65,13 @@ class ContactType extends AbstractType
                     new NotBlank(),
                 )
             ))
+            ->add('rgpd',CheckboxType::class,array(
+                'label'     => "J'accepte que mes données soient enregistrées.",
+                "mapped" => false ,
+                'constraints'   => array(
+                    new NotBlank(),
+                )
+            ))
             ->add('submit',SubmitType::class)
         ;
     }
@@ -53,7 +79,8 @@ class ContactType extends AbstractType
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults([
-            // Configure your form options here
+            'action'     => null,
+            'data_class' => ContactRequest::class,
         ]);
     }
 }

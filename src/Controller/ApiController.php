@@ -9,6 +9,7 @@
 namespace App\Controller;
 
 
+use App\Entity\ContactRequest;
 use App\Form\ContactType;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
@@ -25,14 +26,13 @@ class ApiController extends Controller
     public function contactAction(Request $request){
 
 
-    //    $form = $this->createFormBuilder()
-      //      ->setMethod('post')
-       //     ->setAction($this->generateUrl('api_contact'));
 
-        $form = $this->createForm(ContactType::class,null,['action'=>$this->generateUrl('api_contact')]);
+        $object = new ContactRequest();
+        $form = $this->createForm(ContactType::class , $object,['action'=>$this->generateUrl('api_contact')]);
+
         $form->handleRequest($request);
         if($form->isSubmitted() && $form->isValid()){
-            dump($form->getData());
+
         }
 
         return $this->render('api/contact.html.twig',array('form'=>$form->createView()));
