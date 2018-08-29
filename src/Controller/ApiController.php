@@ -10,31 +10,19 @@ namespace App\Controller;
 
 
 use App\Entity\ContactRequest;
-use App\Form\ContactType;
+use App\Form\ContactForm;
+use ScyLabs\NeptuneBundle\Entity\Infos;
+use ScyLabs\NeptuneBundle\Entity\User;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\Config\Definition\Exception\InvalidConfigurationException;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
+use Symfony\Component\Form\FormError;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
 class ApiController extends Controller
 {
-    /**
-     * @Route("api/contact",name="api_contact")
-     */
-    public function contactAction(Request $request){
 
-
-
-        $object = new ContactRequest();
-        $form = $this->createForm(ContactType::class , $object,['action'=>$this->generateUrl('api_contact')]);
-
-        $form->handleRequest($request);
-        if($form->isSubmitted() && $form->isValid()){
-
-        }
-
-        return $this->render('api/contact.html.twig',array('form'=>$form->createView()));
-    }
 }

@@ -8,6 +8,7 @@ parameters:
     uploads_directory: '%kernel.project_dir%/public/uploads/'
     langs: ['fr','en']
 
+
 stof_doctrine_extensions:
     orm:
         default:

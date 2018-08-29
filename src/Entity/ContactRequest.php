@@ -2,8 +2,10 @@
 
 namespace App\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use ScyLabs\NeptuneBundle\Entity\User;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\ContactRequestRepository")
@@ -18,7 +20,7 @@ class ContactRequest
     private $id;
 
     /**
-     * @ORM\Column(type="string", length=5)
+     * @ORM\Column(type="string", length=255)
      */
     private $civility;
 
@@ -46,6 +48,12 @@ class ContactRequest
      * @ORM\ManyToOne(targetEntity="ScyLabs\NeptuneBundle\Entity\User")
      */
     private $user;
+
+    /**
+     * @ORM\Column(type="string",length=255,nullable=false)
+     * @Assert\Ip
+     */
+    private $ip;
 
 
     public function getId(): ?int
@@ -118,5 +126,20 @@ class ContactRequest
     }
     public function getUser() : ?User{
         return $this->user;
+    }
+    public function getIp() :string{
+        return $this->ip;
+    }
+    public function setIp(string $ip) : self{
+        $this->ip = $ip;
+
+        return $this;
+    }
+
+    public function toArray(){
+        $array = new ArrayCollection();
+        foreach ($this as $key => $value){
+            dump($key. ' - '.$value);
+        }
     }
 }
