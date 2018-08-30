@@ -8,6 +8,7 @@
 
 namespace App\Controller;
 
+use ScyLabs\NeptuneBundle\Entity\File;
 use ScyLabs\NeptuneBundle\Entity\Photo;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
@@ -28,25 +29,27 @@ class PhotoController extends Controller
      * )
      */
     public function generateAction(Request $request,$id,$width,$height,$multiplicator,$truncate){
+
+        if($width == 0 && $height == 0) {
+            throw new HttpException(302);
+        }
+
         // Récupération de la photo
         $ph = $this->getDoctrine()->getRepository(Photo::class)->find($id);
         if($ph === null){
             throw new HttpException(404,"La photo n'existe pas");
         }
+
         /* On récupère le fichier et son chemin */
         $file = $ph->getFile();
         $dir = $this->getParameter('uploads_directory');
         $filePath = $dir.$file->getFile();
 
 
-
         if(!file_exists($filePath)){
             throw new HttpException(404,"La photo n'existe pas");
         }
 
-
-        // On récupère L'image de base
-        $img = new \Imagick($filePath);
 
         // On applique le multiplicateur de taille
         $width *= ($multiplicator / 100);
@@ -61,29 +64,7 @@ class PhotoController extends Controller
             $height = $this->calcScale($height);
         }
 
-        // Si height != 0 && width != 0 et que on ne calcule pas le ratio .. Alors teste le ratio
-        if($height != 0  && $width != 0 && $truncate == 0){
-
-            $resolution = $img->getImageGeometry();
-            $ratioImg  = $resolution['width'] / $resolution['height'];
-            $ratioResult = $width / $height;
-            // Si le résultat doit être en portrait on défini Width a 0
-            if($ratioResult <= $ratioImg){
-                $width = 0;
-            }
-            else{
-                // Si l'image doit être en paysage on défini  heightr a 0
-                $height = 0;
-            }
-        }
-        if($width == 0 && $height == 0) {
-            throw new HttpException(302);
-        }
         $localThumb = $dir.'thumbnails';
-        if(!file_exists($localThumb)){
-            mkdir($localThumb);
-        }
-
 
         $nameExp = explode('.',$file->getFile());
 
@@ -101,6 +82,43 @@ class PhotoController extends Controller
 
 
         $path = $localThumb.'/'.$fileName.$wh.'.'.$file->getExt();
+        if(file_exists($path) && ($height == 0 || $height == 0 && $truncate == 1)){
+            $this->headers($file,$path);
+        }
+
+        // On récupère L'image de base
+
+        // Si height != 0 && width != 0 et que on ne calcule pas le ratio .. Alors teste le ratio
+
+        if($height != 0  && $width != 0 && $truncate == 0){
+            $img = new \Imagick($filePath);
+            $resolution = $img->getImageGeometry();
+            $ratioImg  = $resolution['width'] / $resolution['height'];
+            $ratioResult = $width / $height;
+            // Si le résultat doit être en portrait on défini Width a 0
+            if($ratioResult <= $ratioImg){
+                $width = 0;
+            }
+            else{
+                // Si l'image doit être en paysage on défini  heightr a 0
+                $height = 0;
+            }
+
+        }
+
+        if(file_exists($path)){
+            $this->headers($file,$path);
+        }
+
+
+        if(!file_exists($localThumb)){
+            mkdir($localThumb);
+        }
+
+        if(!isset($img)){
+            $img = new \Imagick($filePath);
+        }
+
 
         if(!file_exists($path)){
             $img->setCompressionQuality($this->photoQuality);
@@ -113,37 +131,37 @@ class PhotoController extends Controller
             $img->writeImage($path);
         }
 
+        // Récupération de l'extension du fichier
 
+        // Si jpg , deviens Jpeg (pour norme HTTP)
+        $this->headers($file,$path);
+
+
+        return new Response(readfile($path));
+
+    }
+    private function calcScale($val){
+        return (round($val /100,0,PHP_ROUND_HALF_UP) * 100 + 50 );
+    }
+    private function headers(File $file,$path){
 
         $last_modified_time = filemtime($path);
-
         $etag = 'W/"' . md5($last_modified_time) . '"';
+
+        $result = ($file->getExt() == 'jpg') ? 'jpeg' : $file->getExt();
+        header('Content-Type: image/'.$result);
+        header('Content-Length: '.filesize($path));
 
         header('Last-Modified: ' . gmdate('D, d M Y H:i:s', $last_modified_time) . " GMT");
         header('Cache-Control: public, max-age=604800'); // On peut ici changer la durée de validité du cache
         header("Etag: $etag");
         $result = '';
 
-        // Récupération de l'extension du fichier
-
-
-        // Si jpg , deviens Jpeg (pour norme HTTP)
-        $result = ($file->getExt() == 'jpg') ? 'jpeg' : $file->getExt();
-        header('Content-Type: image/'.$result);
-        header('Content-Length: '.filesize($path));
         if ((isset($_SERVER['HTTP_IF_MODIFIED_SINCE']) && strtotime($_SERVER['HTTP_IF_MODIFIED_SINCE']) === $last_modified_time) ||
             (isset($_SERVER['HTTP_IF_NONE_MATCH']) && $etag === trim($_SERVER['HTTP_IF_NONE_MATCH'])) ) {
             // On renvoit une 304 si on n'a rien modifié depuis
             header('HTTP/1.1 304 Not Modified');
             exit();
         }
-        return new Response(readfile($path));
-
-
-
-
-    }
-    private function calcScale($val){
-        return (round($val /100,0,PHP_ROUND_HALF_UP) * 100 + 50 );
     }
 }

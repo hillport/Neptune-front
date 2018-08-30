@@ -84,7 +84,6 @@ class PageController extends Controller
         $partners = $em->getRepository(Partner::class)->findAll();
 
         $params = array('pages'=>$pages,'page'=>$page,'infos'=>$infos,'partners'=>$partners,'locale'=>$request->getLocale());
-        dump($params);
 
         // Est-ce que le formulaire est envoyé ? valide ? Et est-ce que on est en POST
         if($form->isSubmitted() && $form->isValid() && $request->isMethod('post')){
@@ -186,7 +185,7 @@ class PageController extends Controller
 
         if(!isset($params['form']))
             $params['form'] = $form->createView();
-        
+
         return $this->render('page/contact.html.twig',$params);
     }
 

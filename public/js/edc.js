@@ -43,7 +43,9 @@ if(typeof(root) === typeof(undefined))
     var root = '/';
 /* DEFINITION DES PLUGINS JQUERY */
 $.fn.chargePhoto = function(param){
+    let i = 0;
     this.each(function(){
+
         var $this = $(this);
         var w = parseInt($this.width());
         var h = parseInt($this.height());
@@ -61,21 +63,19 @@ $.fn.chargePhoto = function(param){
                 if(h > 0) {url += '/'+h; }
                 else if((h == 0 || h == '' ) && $this.hasClass('noratio') || und) {url += '/0'; }
 
-                if($this.hasClass('noratio')) {url += '/1'; }
-                else if($this.hasClass('saphir') || und) {url += '/0'; }
-                if($this.hasClass('saphir')) {url += '/1'; }
-                else if (und)
-                    url += '/0';
-                // Pour savoir si il y a bel et bien un data-nom
-                if(und)
-                    url += '/'+$this.attr('data-nom');
+
                 if ($this.hasClass("paralax"))
                 {
                     $this.css("background-image", "url(" + url+  ")");
                     $this.css("opacity", 1);
                 }
                 else{
-                    $this.find("img").attr("src", url);
+                    i += 500
+                    //setTimeout(function () {
+                        $this.find("img").attr("src", url);
+                    //},i);
+
+
                     $this.find("img").on('load', function ()
                     {
                         if($this.parents('.masonry').length)
@@ -87,7 +87,6 @@ $.fn.chargePhoto = function(param){
                 }
             }
             else{
-                //^photos/([a-zA-Z]{1,4})/([a-zA-Z0-9-_]*)/([\d+]{0,4})(/([\d+]{0,4}))?(/([0-1]?))?(/[a-zA-Z0-9-]+)?$ /ajax/generer_photo_normale.php?id=$2&w=$3&h=$5&noratio=$7&ext=$1 [T=image/jpg]
 
                 let exp = id.split('.');
 
