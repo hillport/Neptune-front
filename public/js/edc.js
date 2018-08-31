@@ -60,9 +60,6 @@ $.fn.chargePhoto = function(param){
                 var und = (typeof(nom) != 'undefined' && nom.trim() != '');
                 /* Redéfinition de l'URL pour l'envoyer , se référer au htaccess*/
                 var url = root+"photo/"+id+'/'+w;
-                if(h > 0) {url += '/'+h; }
-                else if((h == 0 || h == '' ) && $this.hasClass('noratio') || und) {url += '/0'; }
-
 
                 if ($this.hasClass("paralax"))
                 {
@@ -71,9 +68,9 @@ $.fn.chargePhoto = function(param){
                 }
                 else{
                     i += 500
-                    //setTimeout(function () {
+                    setTimeout(function () {
                         $this.find("img").attr("src", url);
-                    //},i);
+                    },i);
 
 
                     $this.find("img").on('load', function ()

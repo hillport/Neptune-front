@@ -87,11 +87,11 @@ class PhotoController extends Controller
         }
 
         // On récupère L'image de base
-
+        $img = new \Imagick($filePath);
         // Si height != 0 && width != 0 et que on ne calcule pas le ratio .. Alors teste le ratio
 
         if($height != 0  && $width != 0 && $truncate == 0){
-            $img = new \Imagick($filePath);
+
             $resolution = $img->getImageGeometry();
             $ratioImg  = $resolution['width'] / $resolution['height'];
             $ratioResult = $width / $height;
@@ -103,11 +103,6 @@ class PhotoController extends Controller
                 // Si l'image doit être en paysage on défini  heightr a 0
                 $height = 0;
             }
-
-        }
-
-        if(file_exists($path)){
-            $this->headers($file,$path);
         }
 
 
@@ -115,9 +110,6 @@ class PhotoController extends Controller
             mkdir($localThumb);
         }
 
-        if(!isset($img)){
-            $img = new \Imagick($filePath);
-        }
 
 
         if(!file_exists($path)){
