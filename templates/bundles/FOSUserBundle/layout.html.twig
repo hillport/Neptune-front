@@ -21,9 +21,8 @@
 
         {% if title is defined %}
             <h3>{{ title }}</h3>
-        {% else %}
-            <h3>Connectez vous</h3>
         {% endif %}
+
 
         <div>
             {% if is_granted("IS_AUTHENTICATED_REMEMBERED") and app.user.firstConnexion == false %}

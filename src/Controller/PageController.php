@@ -191,7 +191,7 @@ class PageController extends Controller
 
 
     /**
-     * @Route("/{_locale}/{slug}",name="page",requirements={"slug"="^(?!admin|produit|product)[a-z-_0-9/]+$","_locale"="[a-z]{2}"})
+     * @Route("/{_locale}/{slug}",name="page",requirements={"slug"="^(?!admin)[a-z-_0-9/]+$","_locale"="[a-z]{2}"})
      */
     public function pageAction(Request $request,$slug){
         $em = $this->getDoctrine()->getManager();
