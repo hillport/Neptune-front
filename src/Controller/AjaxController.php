@@ -9,7 +9,10 @@
 namespace App\Controller;
 
 
-class AjaxController
+use ScyLabs\NeptuneBundle\Entity\Page;
+use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+
+class AjaxController extends Controller
 {
 
 }

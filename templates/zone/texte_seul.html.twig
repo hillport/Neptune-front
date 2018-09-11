@@ -5,7 +5,7 @@
     <div class="right flex flex_column justify_center">
         <div class="box flex_0">
             <h2>{{ zone.detail(locale).title }}</h2>
-            <p>{{ zone.detail(locale).description }}</p>
+            <p>{{ zone.detail(locale).description | raw }}</p>
         </div>
     </div>
 </div>

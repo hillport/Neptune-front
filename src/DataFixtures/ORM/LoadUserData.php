@@ -65,7 +65,7 @@ class LoadUserData extends Fixture implements OrderedFixtureInterface,ContainerA
                 ->setTo($user->getEmail())
                 ->setBody(
                     $templating->render(
-                        '@ScyLabsNeptune/admin/security/mail_account.html.twig',
+                        '@ScyLabsNeptune/mail/mail_account.html.twig',
                         array(
                             'login' =>  $user->getEmail(),
                             'pass'  =>  $pass,
