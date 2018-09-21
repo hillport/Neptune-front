@@ -32,7 +32,7 @@
             </div>
         </div>
         <ul id="menu" class="flex flex_column justify_center    ">
-            {% for page in pages %}
+            {% for page in pages  | slice(1) %}
                 {{  recursiveMacro.recursivePage(page,locale) }}
             {% endfor %}
         </ul>

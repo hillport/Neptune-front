@@ -1,0 +1,12 @@
+<div class="bande_title">
+    {% set h1 = page.detail(locale).h1 | split(' ') %}
+    <h1 class="apparition apparition_top">{% for word in h1 %} <span>{{ word }}</span>{% endfor %}</h1>
+
+    <div class="texte apparition">
+        {{ zone.detail(locale).description | raw }}
+    </div>
+    <img src="{{ asset('img/fond_diapo.jpg') | thumb(400)}}" alt="fond"/>
+    {% if zone.prio == 0  %}
+        <a href="#" class="adherer apparition apparition_left">{{ 'Adhérer' | trans }}</a>
+    {% endif %}
+</div>

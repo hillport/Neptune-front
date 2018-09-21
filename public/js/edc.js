@@ -46,20 +46,39 @@ $.fn.chargePhoto = function(param){
     let i = 0;
     this.each(function(){
 
-        var $this = $(this);
-        var w = parseInt($this.width());
-        var h = parseInt($this.height());
-        var id = $this.data('id');
-        let regex = new RegExp(/([0-9])+/);
+        let $this = $(this);
+        let w = parseInt($this.width());
+        let h = parseInt($this.height());
+        let id = $this.data('id');
+        let number = new RegExp(/([0-9])+/);
+        let multiplicator = $this.data('multiplicator');
+        let name = $this.data('name');
+
         $this.addClass('photo_ok');
         if(typeof(id) != 'undefined' && id != ''){
-            if(regex.test(id)){
+            if(number.test(id)){
 
                 var nom = $this.attr('data-nom');
                 // Est-ce que il y a un data-nom ?
-                var und = (typeof(nom) != 'undefined' && nom.trim() != '');
                 /* Redéfinition de l'URL pour l'envoyer , se référer au htaccess*/
                 var url = root+"photo/"+id+'/'+w;
+
+                if(h > 0  ||(typeof(multiplicator) != 'undefined'  && number.text(multiplicator))){
+                    url += '/'+h;
+                }
+                if(typeof (multiplicator) != 'undefined' && number.test(multiplicator)){
+                    url += '/'+multiplicator;
+                }
+                if($this.hasClass('truncate')){
+                    url += "/1";
+                }
+                else if(typeof(name) != 'undefined'){
+                    url += '/0';
+                }
+                if(typeof (name) != 'undefined'){
+                    url += name;
+                }
+
 
                 if ($this.hasClass("paralax"))
                 {
@@ -86,7 +105,6 @@ $.fn.chargePhoto = function(param){
             else{
 
                 let exp = id.split('.');
-
                 let ext = exp[exp.length -1];
                 let und = (typeof(nom) != 'undefined' && nom.trim() != '');
                 if(typeof(ext) != 'undefined' && ext != ''){
@@ -157,7 +175,7 @@ $.fn.resize_img = function(params){
     return this;
 };
 $.fn.apparition = function(params){
-    var ws = $(window).scrollTop();
+    var ws = $(window).scrollTop() + (0.6 * $(window).height());
     this.each(function(){
         var ot = $(this).offset().top;
         if($(this).data('offset') != null && $(window).width() > 599){
@@ -304,7 +322,37 @@ if($('.superfish').length)
         }]
         ]);
 }
+if($('.owl-carousel').length){
+    let config = {
+            slideSpeed : 300,
+            paginationSpeed : 400,
+            items : 1,
+            dots: true,
+            nav: false,
+            autoplay: false,
+            animateOut: 'fadeOut',
+            autoplayTimeout: 6000,
+            loop:true,
+            mouseDrag:false,
+        };
+    if($.fn.owlCarousel){
+        $('.slider').owlCarousel(config);
+    }
+    else{
+        scripts = scripts.concat([
+            root+"js/lib/owl.carousel/dist/assets/owl.carousel.css",
+            [root+"js/lib/owl.carousel/dist/owl.carousel.js", function(){
+                $('.slider').owlCarousel(config);
+            }]
+        ])
+    }
 
+}
+
+$('.apparition').apparition();
+$(window).on('scroll',function(){
+    $('.apparition').apparition();
+})
 if($('#g-recaptcha').length ||$('.g-recaptcha').length)
 {
     scripts.push("https://www.google.com/recaptcha/api.js?hl="+lang_get)

@@ -1,0 +1,126 @@
+.texte_photo_center{
+  padding:6rem;
+  background: #f2f3f5;
+  .relative();
+  &:nth-child(2n){
+    .gauche{
+      order:2;
+    }
+    .container{
+      &::before{
+        right:0;
+        transform:translate(100%,-100%);
+        border-left-width: 1px;
+        border-right-color: transparent;
+      }
+      &::after{
+        right:0;
+        transform:translate(100%,-100%);
+      }
+    }
+  }
+  &:nth-child(2n-1){
+    .container{
+      &::before{
+        left:0;
+        transform:translate(-100%,-100%);
+        border-right-width: 1px;
+        border-left-color: transparent;
+
+      }
+      &::after{
+        left:0;
+        transform:translate(-100%,-100%);
+      }
+    }
+  }
+  > .container{
+    background: #fff;
+    .relative();
+
+    &::before,&::after {
+      content: '';
+      .absolute();
+      .block();
+      top:0;
+    }
+    &::before{
+      padding:1.5rem;
+      border-color: #70716c;
+      border-style: solid;
+      border-bottom-width: 1px;
+      border-top-color: transparent;
+
+    }
+    &::after{
+      padding:0.8rem;
+      background: #f2f3f5;
+    }
+
+    &::before{
+      transform:translate(-100%,-100%);
+      border-right: 1px solid #70716c;
+      border-bottom: 1px solid #70716c;
+    }
+    .gauche{
+      &:after{
+        content:'';
+        .block();
+        width:1rem;
+        height:7rem;
+        background-color: #e73d3d;
+        .absolute();
+        left:5rem;
+        top:0;
+        transform:translate(0,-50%);
+      }
+      max-width: 30%;
+      &::before{
+        content:'';
+        .block();
+        .relative();
+        padding-top: 120%;
+      }
+      .relative;
+      .photo{
+        .absolute();
+        .w100();
+        .h100();
+        left:0;
+        top:0;
+      }
+    }
+    .droite{
+      h2{
+        text-transform: uppercase;
+        font-size: 1.8rem;
+        margin-bottom: 2rem;
+        color:#000;
+      }
+      padding:7rem;
+
+    }
+  }
+  .bg_barres{
+    .absolute();
+    left:0;
+    bottom:0;
+    padding:5rem;
+
+  }
+  .adherer{
+    padding-top: 6rem;
+    a{
+      .block();
+      .center();
+      .uppercase();
+      max-width: 15rem;
+      margin:0 auto;
+      background: #e73d3d;
+      padding:1rem 2rem;
+      color:#fff;
+      font-size: 1.8rem;
+    }
+  }
+
+}

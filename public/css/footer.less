@@ -1,70 +1,69 @@
-@color_one:white;
-@color_two:#27c1db;
-footer
-{
-  background:#70716c;
-  padding: 40px;
-  .mw1200();
-  .margin_0_auto();
-  align-items: center;display: flex!important;
+footer {
+  background: #70716c;
+  .logo {
+    margin-bottom: 3rem;
+    &::before,&::after{
+      content:'';
+      height:0.4em;
+      background: rgba(0, 0, 0, 0.05);
+      display: block;
+      flex:1;
+    }
+    .img{
+      max-width:6rem;
+      min-width: 6rem;
+      flex-basis: 6rem;
+      padding:0 1.5rem;
 
-  > div
-  {
-    padding:0 20px;
-  }
-
-  .logo_footer
-  {
-    .relative();
-
-    .photo
-    {
-      justify-content: center;
-      padding-bottom: 10px;
-
-      img
-      {
-        max-width:80%;height:40px;
-      }
-
-      &:after
-      {
-        content:'';position: absolute;bottom:0;height:2px;background:@color_two;left:10%;right:10%;
+      img {
+        display: block;
+        margin:0 auto;
+        transform:translate(0,-30%);
       }
     }
   }
+  > .container {
+    background: #fff;
+    padding:3rem;
+    position: relative;
+    .rs {
+      position: absolute;
+      right: 3rem;
+      top:3rem;
+      li {
+        display: inline-block;
+        margin:0 1rem;
+        a{
+          padding:1.5rem;
+          display: block;
+          position: relative;
+          border:1px solid #000;
+          i{
+            font-size: 1.6rem;
+            color:#000;
+          }
+        }
 
-  .edco_footer
-  {
-    img
-    {
-      max-width:80%;height:40px;
+
+
+      }
+
     }
-  }
+    .infos {
+      margin-bottom: 3rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      .tel {
 
-  .line_footer
-  {
-    height:40px;position: relative;
-
-    &:after
-    {
-      content:'';position: absolute;left:50%;width:1px;height:100%;background:white;
-    }
-  }
-
-  .adresse_footer,.mail_footer,.tel_footer
-  {
-    color:@color_one;
-
-    h3
-    {
-      text-transform: uppercase;padding-bottom: 5px;
-    }
-
-    a
-    {
-      text-decoration: none;
-      color:white;
+        a{
+          color:red;
+          font-size: 1.8rem;
+          letter-spacing: 0.2em;
+        }
+      }
+      .mailto{
+        font-size: 1.2rem;
+      }
     }
   }
 }

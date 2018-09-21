@@ -5,6 +5,7 @@
     color:#000;
     font-size: 1.8rem;
   }
+
   > div {
     background: #fff;
     padding:3rem 0;
@@ -22,6 +23,25 @@
           min-width: 35rem;
           padding-right: 7rem;
           position: relative;
+          &:hover{
+            .icon{
+              background: #ff0001;
+              color:#fff;
+            }
+          }
+          > .icon {
+            .centerY();
+            color:rgba(0,0,0,0.3);
+            margin-left: -6rem;
+            padding:1rem;
+            border:1px solid rgba(0,0,0,0.3);
+            transition:all 500ms;
+
+            :before{
+              .centerXY();
+            }
+
+          }
           > a {
             position: absolute;
             right:3rem;

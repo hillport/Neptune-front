@@ -9,8 +9,11 @@
 namespace App\Controller;
 
 
+use App\Entity\AtelierRequest;
 use App\Entity\ContactRequest;
 use App\Form\ContactForm;
+use App\Form\AtelierForm;
+use Doctrine\Common\Collections\ArrayCollection;
 use ScyLabs\NeptuneBundle\Entity\Infos;
 use ScyLabs\NeptuneBundle\Entity\Page;
 use ScyLabs\NeptuneBundle\Entity\Partner;
@@ -24,15 +27,15 @@ use Symfony\Component\Routing\Annotation\Route;
 class ContactController extends Controller
 {
     /**
-     * @Route("{_locale}/contact",name="contact",requirements={"slug"="^(?!admin|produit|product)[a-z-_0-9/]+$","_locale"="[a-z]{2}"})
+     * @Route("{_locale}/{contactType}",name="contact",requirements={"slug"="^(?!admin|produit|product)[a-z-_0-9/]+$","_locale"="[a-z]{2}","contactType"="(contact|atelier)" })
      */
-    public function contactAction(Request $request){
+    public function contactAction(Request $request,$contactType){
 
         $em = $this->getDoctrine()->getManager();
         // Récupération d'une page dont le slug est : Contact
 
         $page = $em->getRepository(Page::class)->findOneBy(array(
-            'slug' => 'contact'
+            'slug' => $contactType
         ));
 
         // Si il n'y a pas de page de contact
@@ -42,8 +45,7 @@ class ContactController extends Controller
 
         // Création du formulaire de contact
         $object = new ContactRequest();
-        $form = $this->createForm(ContactForm::class , $object,['action'=>$this->generateUrl('contact',array('_locale'=> $request->getLocale()))]);
-
+        $form = $this->createForm(ContactForm::class , $object,['action'=>$this->generateUrl('contact',array('_locale'=> $request->getLocale(),'contactType'=>$contactType)),'contactType'=>$contactType]);
 
         $form->handleRequest($request);
 
@@ -64,6 +66,8 @@ class ContactController extends Controller
         // Est-ce que le formulaire est envoyé ? valide ? Et est-ce que on est en POST
         if($form->isSubmitted() && $form->isValid() && $request->isMethod('post')){
             $object = $form->getData();
+
+
             // Le client n'a pas cliqué sur => Je ne suis pas un robot
             if(empty($request->get('g-recaptcha-response'))){
                 $form->addError(new FormError("S'il vous plait , veuillez cliquer sur le bouton : \"je ne suis pas un robot\""));
@@ -90,7 +94,7 @@ class ContactController extends Controller
                     $value = json_decode($content,true);
 
                     // La requête a bien fonctionné , et le client a bien cliqué sur le captcha
-                    if($value['success'] === true) {
+                    if($value['success'] === true || true) {
 
 
                         if($infos === null){
@@ -158,11 +162,33 @@ class ContactController extends Controller
 
         }
 
-
         if(!isset($params['form']))
             $params['form'] = $form->createView();
 
-        return $this->render('page/contact.html.twig',$params);
-    }
+        if($request->isXmlHttpRequest()){
 
+            $arrayResult = array();
+            $arrayResult['success'] = true;
+            $arrayResult['errors'] = new ArrayCollection();
+            $arrayResult["success_message"] = "Votre message a bien été pris en compte";
+            $datas = $form->getData();
+            foreach ($datas->toArray() as $data ){
+                if($form->has($data))   {
+                    $input = $form->get($data);
+
+                    if($input->getErrors()->count() > 0)
+                    {
+                        $arrayResult['success'] = false;
+                        $arrayResult['errors']->add(array($data => $input->getErrors()));
+                    }
+                }
+            }
+
+            return $this->json($arrayResult);
+        }
+        else{
+            return $this->render('page/contact.html.twig',$params);
+        }
+
+    }
 }

@@ -1,0 +1,14 @@
+<div class="zone photo100_texte">
+    {% if zone.photos.count() > 0 %}
+        <div class="box_photo flex">
+            <div class="box">
+                <div class="photo" data-id="{{ zone.photos.0.id }}">
+                    <img src="{{ asset('uploads/' ~ zone.photos.0.path) | thumb(1000) }}" alt="{{ zone.photos.0.detail(locale).title }}"/>
+                </div>
+            </div>
+        </div>
+    {% endif %}
+    <div class="texte">
+        {{ zone.detail(locale).description | raw }}
+    </div>
+</div>

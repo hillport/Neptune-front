@@ -8,7 +8,6 @@
     <meta name="Keywords" content=""/>
     <meta name="viewport" content="width=device-width"/>
     {# Transformer les fichiers less en fichier css a la mise en ligne#}
-    <link rel="stylesheet" href="{{ asset('css/structure.css') }}"/>
     <link rel="stylesheet/less" href="{{ asset('css/style.less') }}?v={{ random() }}"/>
 
     {# Script LESS EN DEV . A enlever en prod #}
@@ -26,11 +25,13 @@
     {% include 'footer.html.twig' %}
     <script type="text/javascript">
         var root = "{{ asset('') }}";
-        console.log(root);
+        var lang_get = "{{ locale }}";
         let dependances = [
+            "https://fonts.googleapis.com/css?family=Roboto:200,400,500",
             "{{ asset('js/lib/jquery/jquery.min.js') }}",
             "{{ asset('js/edc.js') }}",
             "{{ asset('js/header.js') }}",
+
             {% block dep %}
             {% endblock dep %}
         ];

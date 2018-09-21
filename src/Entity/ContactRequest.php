@@ -55,6 +55,11 @@ class ContactRequest
      */
     private $ip;
 
+    /**
+     * @ORM\Column(type="string", length=255)
+     */
+    private $subject;
+
 
     public function getId(): ?int
     {
@@ -141,5 +146,17 @@ class ContactRequest
         foreach ($this as $key => $value){
             dump($key. ' - '.$value);
         }
+    }
+
+    public function getSubject(): ?string
+    {
+        return $this->subject;
+    }
+
+    public function setSubject(string $subject): self
+    {
+        $this->subject = $subject;
+
+        return $this;
     }
 }
