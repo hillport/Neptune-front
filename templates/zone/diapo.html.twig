@@ -5,13 +5,16 @@
         </div>
     </div>
     <div class="w60 right apparition apparition_right">
-        {% for photo in zone.photos %}
-            <div class="photo relative" data-id="{{ photo.id }}">
-                <span class="flex justify_center absolute left0 top0 w100 h100">
-                    <img src="{{ asset('uploads/'~ photo.path) | thumb(1000) }}" alt="{{ zone.name }}" class="object-fit"/>
-                </span>
+
+            <div class="owl-carousel slider">
+                {% for photo in zone.photos %}
+                    <div class="photo relative" data-id="{{ photo.id }}">
+                        <span class="flex justify_center absolute left0 top0 w100 h100">
+                            <img src="{{ asset('uploads/'~ photo.path) | thumb(1000) }}" alt="{{ zone.name }}" class="object-fit"/>
+                        </span>
+                    </div>
+                {% endfor %}
             </div>
-        {% endfor %}
     </div>
     <a href="#" class="adherer">{{ 'Adhérer' | trans }}</a>
 </div>

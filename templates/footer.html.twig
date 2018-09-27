@@ -8,12 +8,11 @@
             <ul class="rs">
                 <li class="mailto"><a><i class="fal fa-envelope centerXY"></i></a></li>
                 <li><a href="{{ infos.facebook }}"><i class="fab fa-facebook-f centerXY"></i></a></li>
-                <li><a href="{{ infos.twitter }}"><i class="fab fa-twitter centerXY"></i></a></li>
             </ul>
         </div>
         <div class="logo flex">
             <div class="img">
-                <img src="{{ asset('img/logo.png') | thumb(30 )}}" alt="Logo {{ infos.name }}" class="block"/>
+                <img src="{{ asset('img/logo.png') | thumb(180)}}" alt="Logo {{ infos.name }}" class="block"/>
             </div>
         </div>
         <div class="bottom">
@@ -21,13 +20,16 @@
                 <ul class="partners hack inline center">
                     {% for partner in partners %}
                         <li class="inline-block">
-                            <a href="{{ partner.url }}">
-                                <img src="{{ asset('uploads/'~partner.photos.0.path) | thumb(75) }}" alt="{{ partner.name }}"/>
+                            <a href="{{ partner.url }}" target="_blank">
+                                <img src="{{ asset('uploads/'~partner.photos.0.path) | thumb(60) }}" alt="{{ partner.name }}"/>
                             </a>
                         </li>
                     {% endfor %}
                 </ul>
             {% endif %}
         </div>
+    </div>
+    <div class="rea">
+        <a href="https://www.leseditionscorses.com" target="_blank"><img src="{{ asset('img/logo_edc_white.png') }}" alt="Les editions corses"/></a>
     </div>
 </footer>

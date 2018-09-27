@@ -1,6 +1,7 @@
 {# Inclusions des zones #}
 
 {% if page.zones.count() > 0 %}
+
     <div class="zones">
         {% for zone in page.zones if (zone.active and zone.remove == 0 ) %}
             {% if file_exist(templates_root~'/zone/'~zone.type.name~'.html.twig') %}

@@ -9,37 +9,41 @@
 namespace App\Controller;
 
 
-use App\Entity\AtelierRequest;
 use App\Entity\ContactRequest;
 use App\Form\ContactForm;
-use App\Form\AtelierForm;
 use Doctrine\Common\Collections\ArrayCollection;
 use ScyLabs\NeptuneBundle\Entity\Infos;
 use ScyLabs\NeptuneBundle\Entity\Page;
+use ScyLabs\NeptuneBundle\Entity\PageUrl;
 use ScyLabs\NeptuneBundle\Entity\Partner;
 use ScyLabs\NeptuneBundle\Entity\User;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\Form\Exception\InvalidConfigurationException;
 use Symfony\Component\Form\FormError;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
 class ContactController extends Controller
 {
     /**
-     * @Route("{_locale}/{contactType}",name="contact",requirements={"slug"="^(?!admin|produit|product)[a-z-_0-9/]+$","_locale"="[a-z]{2}","contactType"="(contact|atelier)" })
+     * @Route("{_locale}/{contactType}",name="contact",requirements={"slug"="^(?!admin|produit|product)[a-z-_0-9/]+$","_locale"="[a-z]{2}","contactType"="(contact)" })
      */
     public function contactAction(Request $request,$contactType){
 
         $em = $this->getDoctrine()->getManager();
         // Récupération d'une page dont le slug est : Contact
 
-        $page = $em->getRepository(Page::class)->findOneBy(array(
-            'slug' => $contactType
+        $url = $em->getRepository(PageUrl::class)->findOneBy(array(
+            'url'=>$contactType
         ));
 
         // Si il n'y a pas de page de contact
-        if($page === null || $page->getActive() === false){
+        if($url === null){
+            return $this->redirectToRoute('homepage');
+        }
+        $page = $url->getPage();
+        if($page->getActive() == false){
             return $this->redirectToRoute('homepage');
         }
 

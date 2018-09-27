@@ -2,7 +2,6 @@
 {% macro recursivePage(page,locale) %}
     {% import _self as self %}
     {% if page.remove == 0 %}
-
         <li>
             <a href="{% if page.url(locale) is not null%}
                 {{ path('page',{'_locale':locale,'slug':page.url(locale).url}) }}
@@ -22,9 +21,9 @@
 {% endmacro %}
 
 <header>
-    <div class="logo">
-        <img src="{{ asset('img/logo.png') | thumb(70) }}"/>
-    </div>
+    <a href="{{ path('homepage',{'_locale':locale}) }}" class="logo">
+        <img src="{{ asset('img/logo.png') | thumb(200) }}"/>
+    </a>
     <nav class="flex">
         <div class="box_photo">
             <div class="photo">
@@ -32,16 +31,14 @@
             </div>
         </div>
         <ul id="menu" class="flex flex_column justify_center    ">
-            {% for page in pages  | slice(1) %}
+            {% for page in pages %}
                 {{  recursiveMacro.recursivePage(page,locale) }}
             {% endfor %}
         </ul>
         <ul class="rs">
             <li><a href="{{ infos.facebook }}"><i class="fab fa-facebook-f centerXY"></i></a></li>
-            <li><a href="{{ infos.twitter }}"><i class="fab fa-twitter centerXY"></i></a></li>
         </ul>
     </nav>
-
     <div class="btn_menu absolute">
         <span class="title">Menu</span>
         <span class="barres">

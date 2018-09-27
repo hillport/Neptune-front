@@ -2,10 +2,14 @@
   letter-spacing: .05em;
   line-height: 2rem;
   padding:5rem;
+  &:not(:last-child){
+    padding-bottom: 0;
+  }
   .box_photo{
     padding: 2rem 0;
     border-top: 1px solid #787878;
     border-bottom: 1px solid #787878;
+    margin-bottom: 2rem;
 
     .relative();
     &::before{
@@ -34,14 +38,32 @@
       }
     }
     tr:first-child{
+      line-height: 5rem;
       strong{
         text-transform: uppercase;
         color: #e13536;
       }
 
+
     }
 
   }
+  .titles{
+    margin-bottom: 2rem;
+    h3,h4{
+      .uppercase();
+      color:#e13536;
+
+    }
+    h3{
+      font-weight: 600;
+    }
+    h4{
+      font-weight: 100;
+      font-size: 1rem;
+    }
+  }
+
   .container();
   &:nth-child(2){
     padding-top: 12rem;
@@ -54,10 +76,9 @@
   }
   ul{
     .block();
-    .hack-inline();
     li{
-      .inline-block();
-      .w50();
+      .block();
+      padding: 0 0.5rem;
       position: relative;
       letter-spacing: normal;
       &::before{

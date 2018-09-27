@@ -175,7 +175,7 @@ $.fn.resize_img = function(params){
     return this;
 };
 $.fn.apparition = function(params){
-    var ws = $(window).scrollTop() + (0.6 * $(window).height());
+    var ws = $(window).scrollTop() +  $(window).height() - 300;
     this.each(function(){
         var ot = $(this).offset().top;
         if($(this).data('offset') != null && $(window).width() > 599){
@@ -291,78 +291,78 @@ else
 /* Debut du chargement des scirpts */
 var scripts = new Array() ;
 
-
-if($('.fa,.fab,.far,.fal').length)
-{
-    scripts.push(root+"js/lib/fontawesome-pro/css/all.min.css");
-}
-
-if($('.fancy').length)
-{
-    scripts = scripts.concat([
-     root+"js/lib/fancybox/dist/jquery.fancybox.min.css",
-     root+"js/lib/fancybox/dist/jquery.fancybox.min.js"
-     ,function(){
-      $('.fancy').fancybox();
-  }]);
-}
-if($('.masonry').length)
-    scripts = scripts.concat([root+"js/lib/masonry-layout/dist/masonry.pkgd.min.js",function(){
-        $('.masonry').masonry();
-    }]);
-
-
-if($('.superfish').length)
-{
-    scripts = scripts.concat([
-        root+"js/lib/superfish/dist/css/superfish.css",
-        [root+"js/lib/superfish/dist/js/superfish.min.js",
-        function(){
-            $('.superfish').superfish();
-        }]
-        ]);
-}
-if($('.owl-carousel').length){
-    let config = {
-            slideSpeed : 300,
-            paginationSpeed : 400,
-            items : 1,
-            dots: true,
-            nav: false,
-            autoplay: false,
-            animateOut: 'fadeOut',
-            autoplayTimeout: 6000,
-            loop:true,
-            mouseDrag:false,
-        };
-    if($.fn.owlCarousel){
-        $('.slider').owlCarousel(config);
+$(function() {
+    if($('.fa,.fab,.far,.fal').length)
+    {
+        scripts.push(root+"js/lib/fontawesome-pro/css/all.min.css");
     }
-    else{
+
+    if($('.fancy').length)
+    {
         scripts = scripts.concat([
-            root+"js/lib/owl.carousel/dist/assets/owl.carousel.css",
-            [root+"js/lib/owl.carousel/dist/owl.carousel.js", function(){
-                $('.slider').owlCarousel(config);
+         root+"js/lib/fancybox/dist/jquery.fancybox.min.css",
+         root+"js/lib/fancybox/dist/jquery.fancybox.min.js"
+         ,function(){
+          $('.fancy').fancybox();
+      }]);
+    }
+    if($('.masonry').length)
+        scripts = scripts.concat([root+"js/lib/masonry-layout/dist/masonry.pkgd.min.js",function(){
+            $('.masonry').masonry();
+        }]);
+
+
+    if($('.superfish').length)
+    {
+        scripts = scripts.concat([
+            root+"js/lib/superfish/dist/css/superfish.css",
+            [root+"js/lib/superfish/dist/js/superfish.min.js",
+            function(){
+                $('.superfish').superfish();
             }]
-        ])
+            ]);
+    }
+    if($('.owl-carousel').length){
+        let config = {
+                slideSpeed : 300,
+                paginationSpeed : 400,
+                items : 1,
+                dots: true,
+                nav: false,
+                autoplay: true,
+                animateOut: 'fadeOut',
+                autoplayTimeout: 6000,
+                loop:true,
+                mouseDrag:false,
+            };
+        if($.fn.owlCarousel){
+            $('.slider').owlCarousel(config);
+        }
+        else{
+            scripts = scripts.concat([
+                root+"js/lib/owl.carousel/dist/assets/owl.carousel.css",
+                [root+"js/lib/owl.carousel/dist/owl.carousel.js", function(){
+                    $('.slider').owlCarousel(config);
+                }]
+            ])
+        }
+
     }
 
-}
-
-$('.apparition').apparition();
-$(window).on('scroll',function(){
     $('.apparition').apparition();
-})
-if($('#g-recaptcha').length ||$('.g-recaptcha').length)
-{
-    scripts.push("https://www.google.com/recaptcha/api.js?hl="+lang_get)
-}
+    $(window).on('scroll',function(){
+        $('.apparition').apparition();
+    })
+    if($('#g-recaptcha').length ||$('.g-recaptcha').length)
+    {
+        scripts.push("https://www.google.com/recaptcha/api.js?hl="+lang_get)
+    }
 
-$('.photo').chargePhoto();
-$.edc.loadScript(scripts);
+    $('.photo').chargePhoto();
+    $.edc.loadScript(scripts);
 
 
-
+});
 
 
 

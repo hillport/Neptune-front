@@ -4,6 +4,7 @@
   position: relative;
 
   .right{
+    overflow: hidden;
     position: relative;
     &::before,&::after{
       content:'';
@@ -49,5 +50,9 @@
     background:#e73d3d;
     letter-spacing: 0.2rem;
     display: block;
+    transition:all 500ms;
+    &:hover{
+      background: #000;
+    }
   }
 }

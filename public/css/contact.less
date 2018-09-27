@@ -6,22 +6,21 @@
     &.gauche{
       padding-right: 0.5rem;
       .relative();
-      &::after{
-        .block();
-        .absolute();
-        content:'';
-        width:0.9rem;
-        height:100%;
-        bottom:0;
-        right:0;
-        background: #e13536;
-        transform:translate(0.4rem);
+      iframe{
+        filter:grayscale(100%);
       }
       .infos{
         padding:10rem;
         font-size: 1.6rem;
+        padding-right: 0;
         > *{
           .w50();
+          &:nth-child(2){
+            .right();
+          }
+          > li:first-child{
+            margin-bottom: 3rem;
+          }
           >li:nth-child(3){
             ul{
               margin-left: 3.8rem;
@@ -89,8 +88,24 @@
       }
     }
     .w50();
+    .iframe{
+      position: relative;
+      &::after{
+        .block();
+        .absolute();
+        content:'';
+        width:1rem;
+        height:100%;
+        bottom:0;
+        right:0;
+        background: #e13536;
+        transform:translate(100%);
+      }
+    }
     iframe{
       .w100();
+
+
 
     }
 

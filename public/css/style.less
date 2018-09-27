@@ -9,8 +9,10 @@
 	src: url('./fonts/Raleway-Light.ttf');
 }
 html { font-size: 62.5%; color:#787878;/* font-size:10px;*/}
-body { font:1.4rem/1.42 "Roboto",Arial,Helvetica,sans-serif; overflow-x: hidden;transition: all 150ms;-webkit-transition: all 150ms;}
-
+body { font:1.4rem/1.42 'Source Serif Pro', serif; overflow-x: hidden;transition: all 150ms;-webkit-transition: all 150ms;}
+h1,h2,h3,h4,h5,h6{
+ font-family: "Roboto",Arial,Helvetica,sans-serif;
+}
 .align_content_right {
 	align-content: right;}
 
@@ -27,7 +29,16 @@ body { font:1.4rem/1.42 "Roboto",Arial,Helvetica,sans-serif; overflow-x: hidden;
 		object-position: 50% 50%;
 	}
 }
-
+p{
+	line-height: 2;
+}
+a{
+	color:#000;
+	transition: color 500ms;
+	&:hover{
+		color:#e13536;
+	}
+}
 
 
 
@@ -41,6 +52,7 @@ body { font:1.4rem/1.42 "Roboto",Arial,Helvetica,sans-serif; overflow-x: hidden;
 @import "zone/bande_diapo.less";
 @import "zone/bande_title.less";
 @import "zone/separation.less";
+@import "zone/bouton_adherer.less";
 @import "zone/texte_photo_center.less";
 @import "zone/title_fond_gris.less";
 @import "footer.less";

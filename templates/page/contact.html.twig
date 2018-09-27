@@ -4,7 +4,9 @@
     {{ include ('zones.html.twig')  }}
     <div class="contact_forms hack-inline">
         <div class="gmap gauche">
-            {{ infos.gmap | raw }}
+            <div class="iframe">
+                {{ infos.gmap | raw }}
+            </div>
             <div class="hack-inline grid-2 infos">
                 <ul class="element">
                     <li>{{ infos.name }}</li>
