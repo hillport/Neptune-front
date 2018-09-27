@@ -47,8 +47,13 @@ class ControllerSubscriber implements EventSubscriberInterface
         );
     }
 
+    /*
+     * Exemples to execute code before the Controllers
+     */
     public function processController ( FilterControllerEvent $event )
     {
+        /*
+
         if(! $event->isMasterRequest()){
             return;
         }
@@ -68,12 +73,13 @@ class ControllerSubscriber implements EventSubscriberInterface
 
 
         }
+        */
         return;
     }
 
     public function logController ( FilterControllerEvent $event )
     {
-    }
 
+    }
 
 }

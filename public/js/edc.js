@@ -355,7 +355,7 @@ $(function() {
     })
     if($('#g-recaptcha').length ||$('.g-recaptcha').length)
     {
-        scripts.push("https://www.google.com/recaptcha/api.js?hl="+lang_get)
+        scripts.push("https://www.google.com/recaptcha/api.js?hl="+$.edc.lang_get)
     }
 
     $('.photo').chargePhoto();

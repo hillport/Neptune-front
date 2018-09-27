@@ -1,0 +1,12 @@
+{
+  "name": "DolceVita",
+  "dependencies": {
+    "jquery": "latest",
+    "fancybox": "latest",
+    "OwlCarousel2/OwlCarousel2" : "^2",
+    "masonry" : "latest",
+    "font-awsome" :"latest",
+    "superfish" :"latest",
+    "santanas2b/script-loader" : "latest"
+  }
+}
