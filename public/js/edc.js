@@ -64,7 +64,7 @@ $.fn.chargePhoto = function(param){
                 /* Redéfinition de l'URL pour l'envoyer , se référer au htaccess*/
                 var url = root+"photo/"+id+'/'+w;
 
-                if(h > 0  ||(typeof(multiplicator) != 'undefined'  && number.text(multiplicator)) || $this.data('truncate') != null || typeof(name) != 'undefined'){
+                if(h > 0  ||(typeof(multiplicator) != 'undefined'  && number.test(multiplicator)) || $this.data('truncate') != null || typeof(name) != 'undefined'){
                     url += '/'+h;
                 }
                 if(typeof (multiplicator) != 'undefined' && number.test(multiplicator) || $this.data('truncate') != null || typeof(name) != 'undefined'){
@@ -80,7 +80,7 @@ $.fn.chargePhoto = function(param){
                     url += '/0';
                 }
                 if(typeof (name) != 'undefined'){
-                    url += name;
+                    url += '/'+name;
                 }
 
 
@@ -91,10 +91,10 @@ $.fn.chargePhoto = function(param){
                 }
                 else{
                     i += 500;
-//                    setTimeout(function () {
+                    setTimeout(function () {
 
                     $this.find("img").attr("src", url);
-//                    },i);
+                    },i);
 
                     $this.find("img").on('load', function ()
                     {
