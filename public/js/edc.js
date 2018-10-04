@@ -54,6 +54,7 @@ $.fn.chargePhoto = function(param){
         let multiplicator = $this.data('multiplicator');
         let name = $this.data('name');
 
+
         $this.addClass('photo_ok');
         if(typeof(id) != 'undefined' && id != ''){
             if(number.test(id)){
@@ -63,13 +64,16 @@ $.fn.chargePhoto = function(param){
                 /* Redéfinition de l'URL pour l'envoyer , se référer au htaccess*/
                 var url = root+"photo/"+id+'/'+w;
 
-                if(h > 0  ||(typeof(multiplicator) != 'undefined'  && number.text(multiplicator))){
+                if(h > 0  ||(typeof(multiplicator) != 'undefined'  && number.text(multiplicator)) || $this.data('truncate') != null || typeof(name) != 'undefined'){
                     url += '/'+h;
                 }
-                if(typeof (multiplicator) != 'undefined' && number.test(multiplicator)){
+                if(typeof (multiplicator) != 'undefined' && number.test(multiplicator) || $this.data('truncate') != null || typeof(name) != 'undefined'){
+                    if(typeof (multiplicator) == 'undefined'){
+                        multiplicator = 100;
+                    }
                     url += '/'+multiplicator;
                 }
-                if($this.hasClass('truncate')){
+                if($this.data('truncate') != null){
                     url += "/1";
                 }
                 else if(typeof(name) != 'undefined'){
@@ -86,11 +90,11 @@ $.fn.chargePhoto = function(param){
                     $this.css("opacity", 1);
                 }
                 else{
-                    i += 500
-                    setTimeout(function () {
-                        $this.find("img").attr("src", url);
-                    },i);
+                    i += 500;
+//                    setTimeout(function () {
 
+                    $this.find("img").attr("src", url);
+//                    },i);
 
                     $this.find("img").on('load', function ()
                     {
@@ -147,7 +151,7 @@ $.fn.chargePhoto = function(param){
             }
         }
     });
-return this;
+    return this;
 };
 $.fn.mailto = function(mail){
     var tmail = /^[a-zA-Z0-9]([-_.]?[a-zA-Z0-9])*@[a-zA-Z0-9]([-_.]?[a-zA-Z0-9])*\.([a-z]{2,4})$/;
@@ -158,43 +162,46 @@ $.fn.mailto = function(mail){
             window.location.href = 'mailto:'+mail;
         });
     }
-}
-$.fn.resize_img = function(params){
-    this.each(function(){
-        var img = $(this).find('> img');
-        img.removeClass('img_portrait').removeClass('img_paysage');
-        var ratio_zone = $(this).width() / $(this).height();
-        var ratio_img = img.width() / img.height();
-        if(ratio_zone >= ratio_img){
-            img.addClass('img_paysage');
-        }
-        else{
-            img.addClass('img_portrait');
-        }
-    });
-    return this;
 };
-$.fn.apparition = function(params){
-    var ws = $(window).scrollTop() +  $(window).height() - 300;
+$.fn.apparition = function(opts){
+
+    let defaults = {
+        scrollTop : null,
+    };
+    if(typeof (opts) != 'undefined'){
+        defaults = opts;
+    }
+
+    if(defaults.scrollTop == null){
+        defaults.scrollTop = $(window).scrollTop() +  $(window).height() * 0.7;
+    }
+
+    let regPixels = new RegExp(/.*px$/,'i');
     this.each(function(){
-        var ot = $(this).offset().top;
-        if($(this).data('offset') != null && $(window).width() > 599){
-            var offset = $(this).data('offset');
+        let ot = $(this).offset().top;
+
+        if($(this).data('offset') != null){
+
+            let offset = $(this).data('offset');
+            if(regPixels.text(offset)){
+                offset.replace(/(.*)px$/,'$1');
+            }
+            else{
+                offset = $(window).height() * offset;
+            }
+
             if(offset > 100 && $(window).height() < 900){
                 offset = 100;
 
             }
             ot += parseInt(offset);
         }
-        if(ws > ot && !$(this).hasClass('show')){
-            $(this).addClass('show');
-        }
-        else if(ws < ot && $(this).hasClass('show') && !$(this).hasClass("nodispear")){
-            $(this).removeClass('show');
+        if(defaults.scrollTop > ot && $(this).hasClass('hide')){
+            $(this).removeClass('hide');
         }
     });
     return this;
-}
+};
 
 $.fn.extend({
     setCustomValidity : function(message){
@@ -215,7 +222,7 @@ $.edc ={
     compteur_script_ajax: 0,
     lang : (typeof(lang_get) == "undefined") ? 'fr' : lang_get,
     fichiers_fancy:[root+"js/lib/fancybox/dist/jquery.fancybox.min.css",
-    root+"js/lib/fancybox/dist/jquery.fancybox.min.js"],
+        root+"js/lib/fancybox/dist/jquery.fancybox.min.js"],
     /* FIN VARIABLES */
     /* Functions */
     send:function(url,type='GET',data='',fn = function(e){}){
@@ -232,16 +239,16 @@ $.edc ={
             type = 'GET';
         }
         $.ajax(
-        {
-            type: type,
-            url: url,
-            data: data,
-            contentType: content,
-            processData: content,
-            success:function(e){
-                fn(e);
-            }
-        });
+            {
+                type: type,
+                url: url,
+                data: data,
+                contentType: content,
+                processData: content,
+                success:function(e){
+                    fn(e);
+                }
+            });
     },
     fancy: function(data,type='inline',close = false,fn = function(e){}){
         var $this = $.edc;
@@ -300,11 +307,11 @@ $(function() {
     if($('.fancy').length)
     {
         scripts = scripts.concat([
-         root+"js/lib/fancybox/dist/jquery.fancybox.min.css",
-         root+"js/lib/fancybox/dist/jquery.fancybox.min.js"
-         ,function(){
-          $('.fancy').fancybox();
-      }]);
+            root+"js/lib/fancybox/dist/jquery.fancybox.min.css",
+            root+"js/lib/fancybox/dist/jquery.fancybox.min.js"
+            ,function(){
+                $('.fancy').fancybox();
+            }]);
     }
     if($('.masonry').length)
         scripts = scripts.concat([root+"js/lib/masonry-layout/dist/masonry.pkgd.min.js",function(){
@@ -317,24 +324,24 @@ $(function() {
         scripts = scripts.concat([
             root+"js/lib/superfish/dist/css/superfish.css",
             [root+"js/lib/superfish/dist/js/superfish.min.js",
-            function(){
-                $('.superfish').superfish();
-            }]
-            ]);
+                function(){
+                    $('.superfish').superfish();
+                }]
+        ]);
     }
     if($('.owl-carousel').length){
         let config = {
-                slideSpeed : 300,
-                paginationSpeed : 400,
-                items : 1,
-                dots: true,
-                nav: false,
-                autoplay: true,
-                animateOut: 'fadeOut',
-                autoplayTimeout: 6000,
-                loop:true,
-                mouseDrag:false,
-            };
+            slideSpeed : 300,
+            paginationSpeed : 400,
+            items : 1,
+            dots: true,
+            nav: false,
+            autoplay: true,
+            animateOut: 'fadeOut',
+            autoplayTimeout: 6000,
+            loop:true,
+            mouseDrag:false,
+        };
         if($.fn.owlCarousel){
             $('.slider').owlCarousel(config);
         }
@@ -349,16 +356,24 @@ $(function() {
 
     }
 
-    $('.apparition').apparition();
+
+
     $(window).on('scroll',function(){
-        $('.apparition').apparition();
-    })
+        $('.apparition.hide').apparition();
+    });
+
     if($('#g-recaptcha').length ||$('.g-recaptcha').length)
     {
         scripts.push("https://www.google.com/recaptcha/api.js?hl="+$.edc.lang_get)
     }
 
-    $('.photo').chargePhoto();
+    $(window).on('load',function (e) {
+        $('.photo').chargePhoto();
+        $('.apparition.hide').apparition();
+    });
+
+
+
     $.edc.loadScript(scripts);
 
 
