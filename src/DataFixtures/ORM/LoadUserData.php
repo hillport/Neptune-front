@@ -35,28 +35,57 @@ class LoadUserData extends Fixture implements OrderedFixtureInterface,ContainerA
         $mailer = $this->container->get('mailer');
 
         $users = array();
+        /*
+         * Alex
+         */
         $users[] = $userManager->createUser()
             ->setUsername('alex@e-corses.com')
             ->setEmail('alex@e-corses.com')
             ->setFirstConnexion(true)
             ->setRoles(array('ROLE_SUPER_ADMIN'));
+
+        /*
+         * FA
+         */
         $users[] = $userManager->createUser()
             ->setUsername('fa@e-corses.com')
             ->setEmail('fa@e-corses.com')
             ->setFirstConnexion(true)
             ->setRoles(array('ROLE_SUPER_ADMIN'));
+        /*
+         * Quentin
+         */
+        $users[] = $userManager->createUser()
+            ->setUsername('quentin@e-corses.com')
+            ->setEmail('quentin@e-corses.com')
+            ->setFirstConnexion(true)
+            ->setRoles(array('ROLE_SUPER_ADMIN'));
 
+        /*
+         * Ayrton
+         */
         $users[] = $userManager->createUser()
             ->setUsername('assistance@e-corses.com')
             ->setEmail('assistance@e-corses.com')
             ->setFirstConnexion(true)
             ->setRoles(array('ROLE_SUPER_ADMIN'));
+        /*
+         * MARINE
+         */
+        $users[] = $userManager->createUser()
+            ->setUsername('m.savreux@e-corses.com')
+            ->setEmail('m.savreux@e-corses.com')
+            ->setFirstConnexion(true)
+            ->setRoles(array('ROLE_ADMIN'));
 
+        /*
+         * Web
+         */
         $users[] = $userManager->createUser()
             ->setUsername('web@e-corses.com')
             ->setEmail('web@e-corses.com')
             ->setFirstConnexion(true)
-            ->setRoles(array('ROLE_SUPER_ADMIN'));
+            ->setRoles(array('ROLE_ADMIN'));
 
         foreach ($users as $user){
             $pass = substr(hash('sha256',random_bytes(10)),0,10);
