@@ -330,22 +330,20 @@ $(function() {
         ]);
     }
     if($('.owl-carousel').length){
-        let config = {
-            slideSpeed : 300,
-            paginationSpeed : 400,
-            items : 1,
-            dots: true,
-            nav: false,
-            autoplay: true,
-            animateOut: 'fadeOut',
-            autoplayTimeout: 6000,
-            loop:true,
-            mouseDrag:false,
-        };
-        if($.fn.owlCarousel){
-            $('.slider').owlCarousel(config);
-        }
-        else{
+
+        if(!$.fn.owlCarousel){
+            let config = {
+                slideSpeed : 300,
+                paginationSpeed : 400,
+                items : 1,
+                dots: true,
+                nav: false,
+                autoplay: true,
+                animateOut: 'fadeOut',
+                autoplayTimeout: 6000,
+                loop:true,
+                mouseDrag:false,
+            };
             scripts = scripts.concat([
                 root+"js/lib/owl.carousel/dist/assets/owl.carousel.css",
                 [root+"js/lib/owl.carousel/dist/owl.carousel.js", function(){
@@ -353,7 +351,6 @@ $(function() {
                 }]
             ])
         }
-
     }
 
 
