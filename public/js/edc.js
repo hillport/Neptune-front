@@ -299,6 +299,7 @@ else
 var scripts = new Array() ;
 
 $(function() {
+    $('.apparition').addClass('hide');
     if($('.fa,.fab,.far,.fal').length)
     {
         scripts.push(root+"js/lib/fontawesome-pro/css/all.min.css");

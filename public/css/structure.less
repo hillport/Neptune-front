@@ -266,74 +266,56 @@ body * {
 
 
 .apparition {
-  .opa0();
   .trans(all,1000ms);
 }
 
-.apparition.show {
-  .opa1();
-}
-
-.apparition.apparition_cartouche {
-  .opa1();
-
-}
-
-.apparition.apparition_cartouche > .element {
+.apparition.hide {
   .opa0();
-  bottom: -15rem;
-
 }
 
-.apparition.apparition_cartouche.show > .element {
-  .opa1();
-  bottom: 0;
-
-}
-
-.apparition_right {
+.apparition_right.hide {
   transform: translate(15rem);
   -webkit-transform: translate(15rem);
 
 }
 
-.apparition_left {
+.apparition_left.hide {
   transform: translate(-15rem);
   -webkit-transform: translate(-15rem);
 
 }
 
-.apparition_top {
+.apparition_top.hide {
   transform: translate(0, -15rem);
   -webkit-transform: translate(0, -15rem);
 
 }
 
-.apparition_bottom {
+.apparition_bottom.hide {
   transform: translate(0, 15rem);
   -webkit-transform: translate(0, 15rem);
 
 }
 
-.apparition_bottom.show {
+.apparition_bottom {
   transform: translate(0);
   -webkit-transform: translate(0);
 
 }
 
-.apparition_top.show {
+.apparition_top {
   transform: translate(0);
   -webkit-transform: translate(0);
 
 }
 
-.apparition_left.show {
+.apparition_left {
   transform: translate(0);
   -webkit-transform: translate(0);
 
 }
 
-.apparition_right.show {
+.apparition_right {
   transform: translate(0);
   -webkit-transform: translate(0);
 
