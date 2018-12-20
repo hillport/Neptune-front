@@ -20,7 +20,7 @@ class ContactRequest
     private $id;
 
     /**
-     * @ORM\Column(type="string", length=255)
+     * @ORM\Column(type="string", length=255,nullable=true)
      */
     private $civility;
 
@@ -139,13 +139,6 @@ class ContactRequest
         $this->ip = $ip;
 
         return $this;
-    }
-
-    public function toArray(){
-        $array = new ArrayCollection();
-        foreach ($this as $key => $value){
-            dump($key. ' - '.$value);
-        }
     }
 
     public function getSubject(): ?string

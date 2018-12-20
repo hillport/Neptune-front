@@ -98,7 +98,7 @@ class ContactController extends Controller
                     $value = json_decode($content,true);
 
                     // La requête a bien fonctionné , et le client a bien cliqué sur le captcha
-                    if($value['success'] === true || true) {
+                    if($value['success'] === true) {
 
 
                         if($infos === null){
