@@ -1,11 +1,12 @@
+
 {% trans_default_domain 'app' %}
 <!doctype html>
 <html lang="{{ locale }}">
 <head>
     <meta charset="utf-8"/>
-    <title></title>
-    <meta name="Description" content=""/>
-    <meta name="Keywords" content=""/>
+    <title>{{ page.detail(locale).metaTitle }}</title>
+    <meta name="Description" content="{{ page.detail(locale).metaDesc }}"/>
+    <meta name="Keywords" content="{{ page.detail(locale).metaKeys }}"/>
     <meta name="viewport" content="width=device-width"/>
     {# Transformer les fichiers less en fichier css a la mise en ligne#}
     <link rel="stylesheet/less" href="{{ asset('css/style.less') }}?v={{ random() }}"/>
@@ -33,6 +34,8 @@
             "{{ asset('js/edc.js') }}",
             "{{ asset('js/header.js') }}",
 
+
+            {{ dump(app.request.cookies.get('tot')) }}
             {% block dep %}
             {% endblock dep %}
         ];
