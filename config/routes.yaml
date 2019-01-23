@@ -1,6 +1,8 @@
 neptune:
-    resource: '@ScyLabsNeptuneBundle/Controller'
-    type: annotation
+    resource: "@ScyLabsNeptuneBundle/Resources/config/routes.yaml"
+    prefix: /admin
+neptune_front:
+    resource: "@ScyLabsNeptuneBundle/Resources/config/routes_front.yaml"
 
 fos_user_security:
     resource: "@FOSUserBundle/Resources/config/routing/security.xml"
