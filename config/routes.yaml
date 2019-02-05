@@ -1,9 +1,3 @@
-neptune:
-    resource: "@ScyLabsNeptuneBundle/Resources/config/routes.yaml"
-    prefix: /admin
-neptune_front:
-    resource: "@ScyLabsNeptuneBundle/Resources/config/routes_front.yaml"
-
 fos_user_security:
     resource: "@FOSUserBundle/Resources/config/routing/security.xml"
 
@@ -20,3 +14,8 @@ fos_user_resetting:
 fos_user_change_password:
     resource: "@FOSUserBundle/Resources/config/routing/change_password.xml"
     prefix: /change_password
+neptune:
+    resource: "@ScyLabsNeptuneBundle/Resources/config/routes.yaml"
+    prefix: /admin
+neptune_front:
+    resource: "@ScyLabsNeptuneBundle/Resources/config/routes_front.yaml"
