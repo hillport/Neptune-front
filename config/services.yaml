@@ -15,8 +15,6 @@ stof_doctrine_extensions:
 twig:
     globals:
         templates_root: '%kernel.project_dir%/templates'
-        url_extranet: 'http://extranet.cga20.fr/extranet/index_extranet.php'
-        url_adherer: '#'
 framework:
     templating:
         engines: ["twig"]
@@ -26,8 +24,9 @@ fos_user:
     firewall_name: main
     user_class:    ScyLabs\NeptuneBundle\Entity\User
     from_email:
-        address:       alex@e-corses.com
+        address:       web@e-corses.com
         sender_name:  Les editions corses
+
 services:
     # default configuration for services in *this* file
     _defaults:
