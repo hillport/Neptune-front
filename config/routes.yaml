@@ -22,3 +22,9 @@ neptune_front:
     resource: "@ScyLabsNeptuneBundle/Resources/config/routes_front.yaml"
 
 
+
+neptune:
+    resource: "@ScyLabsNeptuneBundle/Resources/config/routes.yaml"
+    prefix: /admin
+neptune_front:
+    resource: "@ScyLabsNeptuneBundle/Resources/config/routes_front.yaml"
