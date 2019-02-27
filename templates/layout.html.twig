@@ -33,6 +33,11 @@
             "{{ asset('js/lib/jquery/jquery.min.js') }}",
             "{{ asset('js/edc.js') }}",
             "{{ asset('js/header.js') }}",
+            {% if jsZones is defined %}
+                {% for zone in jsZones %}
+                    "{{ asset('js/zone/'~zone~'.js') }}",
+                {% endfor %}
+            {% endif %}
 
             {% block dep %}
             {% endblock dep %}

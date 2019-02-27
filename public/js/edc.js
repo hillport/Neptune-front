@@ -53,6 +53,7 @@ $.fn.chargePhoto = function(param){
         let number = new RegExp(/([0-9])+/);
         let multiplicator = $this.data('multiplicator');
         let name = $this.data('name');
+        let mono = $this.data('monochrome');
 
 
         $this.addClass('photo_ok');
@@ -76,12 +77,20 @@ $.fn.chargePhoto = function(param){
                 if($this.data('truncate') != null){
                     url += "/1";
                 }
-                else if(typeof(name) != 'undefined'){
+                else if(typeof(name) != 'undefined' || typeof(mono) != 'undefined'){
                     url += '/0';
                 }
+                let preg = new RegExp(/[a-zA-Z0-9]{6}-[a-fA-F0-9]{6}/);
+                console.log(preg.test($this.data('monochrome')));
+                console.log($this.data('monochrome'));
+                if($this.data('monochrome') != null && preg.test($this.data('monochrome'))){
+                    url += '/' + $this.data('monochrome');
+                }
+
                 if(typeof (name) != 'undefined'){
                     url += '/'+name;
                 }
+                console.log(url);
 
 
                 if ($this.hasClass("paralax"))
@@ -93,7 +102,7 @@ $.fn.chargePhoto = function(param){
                     i += 500;
                     setTimeout(function () {
 
-                    $this.find("img").attr("src", url);
+                        $this.find("img").attr("src", url);
                     },i);
 
                     $this.find("img").on('load', function ()
