@@ -169,25 +169,34 @@ class ContactController extends Controller
         if(!isset($params['form']))
             $params['form'] = $form->createView();
 
+
         if($request->isXmlHttpRequest()){
 
             $arrayResult = array();
             $arrayResult['success'] = true;
             $arrayResult['errors'] = new ArrayCollection();
+            $arrayResult['globalErrors'] = new ArrayCollection();
             $arrayResult["success_message"] = "Votre message a bien été pris en compte";
             $datas = $form->getData();
-            foreach ($datas->toArray() as $data ){
-                if($form->has($data))   {
-                    $input = $form->get($data);
+            foreach ($datas->toArray() as $key => $val ){
+                if($form->has($key))   {
+                    $input = $form->get($key);
 
                     if($input->getErrors()->count() > 0)
                     {
                         $arrayResult['success'] = false;
-                        $arrayResult['errors']->add(array($data => $input->getErrors()));
+                        $arrayResult['errors']->add(array($key => $input->getErrors()));
                     }
                 }
             }
+            foreach ($form->getErrors() as $key => $error){
+                if($arrayResult['success'] !== false){
+                    $arrayResult['success'] = false;
+                }
 
+                $arrayResult['globalErrors']->add($error);
+
+            }
             return $this->json($arrayResult);
         }
         else{
