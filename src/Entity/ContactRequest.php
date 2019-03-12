@@ -155,9 +155,8 @@ class ContactRequest
     public function toArray(){
         $array = new ArrayCollection();
         foreach ($this as $key => $value){
-            $array->add($key);
+            $array[$key] = $value;
         }
-
         return $array;
     }
 }
