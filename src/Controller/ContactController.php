@@ -107,9 +107,16 @@ class ContactController extends Controller
 
                         $mailer = $this->get('mailer');
 
+                        if(getenv('APP_ENV') == 'prod'){
+                            $from = 'noreply@'.str_replace('www.', '', $_SERVER['HTTP_HOST']);
+                        }
+                        else{
+                            $from = "web@e-corses.com";
+                        }
+
                         $mailer->send(
                             (new \Swift_Message('Demande de contact sur votre site internet'.$_SERVER['HTTP_HOST']))
-                                ->setFrom('web@e-corses.com')
+                                ->setFrom($from)
                                 ->setTo($infos->getMail())
                                 ->setBody(
                                     $this->get('templating')->render(
@@ -124,7 +131,7 @@ class ContactController extends Controller
                         );
                         $mailer->send(
                             (new \Swift_Message('Votre demande de contact sur le site : '.$_SERVER['HTTP_HOST']))
-                                ->setFrom('web@e-corses.com')
+                                ->setFrom($from)
                                 ->setTo($object->getEmail())
                                 ->setBody(
                                     $this->get('templating')->render(
