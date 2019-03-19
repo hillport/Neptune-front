@@ -1,50 +1,38 @@
 {% import _self as recursiveMacro %}
-{% macro recursivePage(page,locale) %}
+{% macro recursivePage(page,locale,pageActive) %}
     {% import _self as self %}
     {% if page.remove == 0 %}
+
         <li>
-            <a href="{% if page.url(locale) is not null%}
-                {{ path('page',{'_locale':locale,'slug':page.url(locale).url}) }}
-            {% endif %}">
+            {% if page.url(locale) is not null%}
+                {% if page.prio == 0 and page.parent is null %}
+                    {% set link = path('homepage',{'_locale':locale}) %}
+                {% else %}
+                    {% set link = path('page',{'_locale':locale,'slug':page.url(locale).url}) %}
+                {% endif %}
+            {% endif %}
+
+            <a href="{{ link }}" class="{{ (page == pageActive) ? 'active' : '' }}{% if page.childs.count > 0 or page.elementTypes | length > 2 %} withsub{% endif %}">
                 {{  page.detail(locale).name}}
             </a>
-
             {% if page.childs |length %}
                 <ul class="sub_menu">
+
+
                     {% for child in page.childs %}
-                        {{ self.recursivePage(child,locale) }}
+                        <a href="{{path('page',{'_locale':locale,'slug':page.url(locale).url})}}#{{ child.name }}"><li>{{  child.detail(locale).name}}</li></a>
                     {% endfor %}
                 </ul>
+            {% endif %}
+            {% if page.zones is not null and page.childs.count == 0 and page.parent == null %}
+                {% if page.elementTypes | length > 2 %}
+                    <ul class="sub_menu">
+                        {% for type in page.elementTypes %}
+                            <a href="{{path('page',{'_locale':locale,'slug':page.url(locale).url})}}#{{ type.name }}"><li>{{ type.title }}</li></a>
+                        {% endfor %}
+                    </ul>
+                {% endif %}
             {% endif %}
         </li>
     {% endif %}
 {% endmacro %}
-
-<header>
-    <a href="{{ path('homepage',{'_locale':locale}) }}" class="logo">
-        <img src="{{ asset('img/logo.png') | thumb(200) }}"/>
-    </a>
-    <nav class="flex">
-        <div class="box_photo">
-            <div class="photo">
-                <img src="{{ asset('img/menu.jpg') }}" alt="Photo menu"/>
-            </div>
-        </div>
-        <ul id="menu" class="flex flex_column justify_center    ">
-            {% for page in pages %}
-                {{  recursiveMacro.recursivePage(page,locale) }}
-            {% endfor %}
-        </ul>
-        <ul class="rs">
-            <li><a href="{{ infos.facebook }}"><i class="fab fa-facebook-f centerXY"></i></a></li>
-        </ul>
-    </nav>
-    <div class="btn_menu absolute">
-        <span class="title">Menu</span>
-        <span class="barres">
-            <i class="left" aria-hidden="true"></i>
-            <i class="center" aria-hidden="true"></i>
-            <i class="right" aria-hidden="true"></i>
-        </span>
-    </div>
-</header>
