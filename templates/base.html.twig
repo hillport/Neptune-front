@@ -1,0 +1,79 @@
+<div class="base">
+    <div class="limit">
+        <h1>Site installé !</h1>
+        <h2>Que faire maintenant ?</h2>
+        <ul>
+            <li>1. Désinstallez "base.html.twig" dans "home.html.twig"</li>
+            <li>2. Supprimez "base.html.twig"</li>
+            <li>3. Connectez-vous sur l'administrateur</li>
+            <li>
+                4. Créez votre première zone
+                <ul>
+                    <li>A. Dossier "public" -> new directory "zones" -> new file -> .less</li>
+                    <li>B. Dossier "templates" -> new directory "zones" -> new file -> name.html.twig</li>
+                    <li>C. Administration -> se connecter -> Types de zones -> Créer un type de zone
+                        <ul>
+                            <li>Name : name.html.twig</li>
+                            <li>Title : ce que vous voulez</li>
+                        </ul>
+                    </li>
+                </ul>
+            </li>
+            <li>5. Soyez créatifs ! ( <a href="http://codex.ecnept.com/" target="_BLANK">Templates gratuits par ici</a> )</li>
+        </ul>
+    </div>
+</div>
+<style>
+    .base
+    {
+        display: flex;
+        justify-content: center;
+        align-content: center;
+        align-items: center;
+        height:100vh;
+        z-index: 99;
+        background: #302f2f;
+    }
+    .base .limit
+    {
+        margin:0 auto;
+        max-width: 1200px;
+        padding:5rem;
+        border:2px orange solid;
+        background:white;
+        color:orange;
+        z-index: 99;
+    }
+    h1
+    {
+        font-weight: bold;
+        font-size:4rem;
+        line-height: 3rem;
+    }
+    h2
+    {
+        font-size:2rem;
+        font-weight: lighter;
+        padding-bottom:2rem;
+    }
+
+    ul
+    {
+        color:black;
+    }
+
+    ul li ul
+    {
+        padding-left:2rem;
+    }
+
+    ul a
+    {
+        font-weight: bold;
+    }
+
+    ul a:hover
+    {
+        color:orange;
+    }
+</style>
