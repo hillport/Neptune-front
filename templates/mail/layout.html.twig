@@ -1,6 +1,6 @@
 {% if  app.request.server is defined %}
     {% set protocol = ( app.request.server.get('SERVER_PROTOCOL') | split('/'))[0] | lower  %}
-    {% set baseurl = protocol ~ '://' ~ (app.request.server is defined) ? app.request.server.get('HTTP_HOST') : 'localhost:8080' %}
+    {% set baseurl = protocol ~ '://' ~ ((app.request.server is defined) ? app.request.server.get('HTTP_HOST') : 'localhost:8080') %}
     {% set website = baseurl ~ asset('') %}
 {% else %}
     {% set protocol = 'https'  %}
