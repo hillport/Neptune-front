@@ -81,8 +81,7 @@ $.fn.chargePhoto = function(param){
                     url += '/0';
                 }
                 let preg = new RegExp(/[a-zA-Z0-9]{6}-[a-fA-F0-9]{6}/);
-                console.log(preg.test($this.data('monochrome')));
-                console.log($this.data('monochrome'));
+                
                 if($this.data('monochrome') != null && preg.test($this.data('monochrome'))){
                     url += '/' + $this.data('monochrome');
                 }
@@ -90,21 +89,16 @@ $.fn.chargePhoto = function(param){
                 if(typeof (name) != 'undefined'){
                     url += '/'+name;
                 }
-                console.log(url);
-
-
+              
                 if ($this.hasClass("paralax"))
                 {
                     $this.css("background-image", "url(" + url+  ")");
                     $this.css("opacity", 1);
                 }
                 else{
-                    i += 500;
-                    setTimeout(function () {
-
-                        $this.find("img").attr("src", url);
-                    },i);
-
+                    
+                    $this.find("img").attr("src", url);
+                
                     $this.find("img").on('load', function ()
                     {
                         if($this.parents('.masonry').length)
