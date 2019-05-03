@@ -1,0 +1,137 @@
+{% extends 'api/mail/layout.html.twig' %}
+{% set locale  = 'fr' %}
+{% import _self as macro %}
+{% macro tr(title,value) %}
+    <tr><td style="padding:10px;" width="600">{{ title }} : </td><td style="padding:10px;">{{ (value is not null) ? value : 'Non renseigné' }}</td></tr>
+{% endmacro %}
+{% block content %}
+    <style>
+        #table_opts {
+            box-sizing: border-box;
+        }
+        #table_opts td{
+            border:1px solid #000;
+            box-sizing: border-box;
+        }
+        #table_opts tr td:not(:first-child){
+            border-left: none;
+        }
+        #table_opts tr:not(:first-child) td{
+            border-top: none;
+        }
+    </style>
+    <!-- module 1 -->
+    <table data-module="module-1" data-thumb="{{ baseurl ~ asset("mail/thumbnails/01.png") }}" width="100%" cellpadding="0" cellspacing="0">
+        <tr>
+            <td data-bgcolor="bg-module" bgcolor="#eaeced">
+                <table class="flexible" width="600" align="center" style="margin:0 auto;" cellpadding="0" cellspacing="0">
+                    <tr>
+                        <td style="padding:29px 0 30px;">
+                            <table width="100%" cellpadding="0" cellspacing="0" style="margin:0 auto;">
+                                <tr>
+                                    <th class="flex" width="113" align="left" style="padding:0;">
+                                        <table class="center" cellpadding="0" cellspacing="0" style="margin:0 auto;">
+                                            <tr>
+                                                <td style="line-height:0;">
+                                                    <a target="_blank" style="text-decoration:none;" href="{{ website }}"><img src="{{ baseurl ~ asset("img/logo.png") }}" border="0" style="height:auto;font:bold 12px/12px Arial, Helvetica, sans-serif; color:#606060;" align="left" vspace="0" hspace="0" width="113" height="12" alt="{{ infos.name }}" /></a>
+                                                </td>
+                                            </tr>
+                                        </table>
+                                    </th>
+
+                                </tr>
+                            </table>
+                        </td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+    </table>
+    <!-- module 2 -->
+    <table data-module="module-2" data-thumb="{{ baseurl ~ asset("mail/thumbnails/02.png") }}" width="100%" cellpadding="0" cellspacing="0">
+        <tr>
+            <td data-bgcolor="bg-module" bgcolor="#eaeced">
+                <table class="flexible" width="600" align="center" style="margin:0 auto;" cellpadding="0" cellspacing="0">
+                    <tr>
+                        <td class="img-flex"><img src="{{ baseurl ~ asset("mail/images/img-01.jpg") }}" style="vertical-align:top;" width="1000" alt="" /></td>
+                    </tr>
+                    <tr>
+                        <td data-bgcolor="bg-block" class="holder" style="padding:58px 60px 52px;" bgcolor="#f9f9f9">
+                            <table width="100%" cellpadding="0" cellspacing="0">
+                                <tr>
+                                    <td data-color="title" data-size="size title" data-min="25" data-max="45" data-link-color="link title color" data-link-style="text-decoration:none; color:#292c34;" class="title" align="center" style="font:26px/38px Arial, Helvetica, sans-serif; color:#292c34; padding:0 0 24px;">
+                                        Demande de devis
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td data-color="text" data-size="size text" data-min="10" data-max="26" data-link-color="link text color" data-link-style="font-weight:bold; text-decoration:underline; color:#40aceb;" align="center" style="font:bold 16px/25px Arial, Helvetica, sans-serif; color:#888; padding:0 0 23px;">
+                                        <h2>Type de devis : <span style="text-transform: capitalize">{{ devis.type }}</span></h2>
+                                        <h3>Coordonnées</h3>
+                                        <table width="100%" cellpadding="0" cellspacing="0">
+                                            {{ macro.tr('Nom',devis.name) }}
+                                            {{ macro.tr('Prénom',devis.firstname) }}
+                                            {{ macro.tr('N° de téléphone',devis.tel) }}
+                                            {{ macro.tr('E-mail',devis.mail) }}
+                                            {{ macro.tr('Adresse',devis.address) }}
+                                            {{ macro.tr('Adresse (suite)',devis.addressContinue) }}
+                                            {{ macro.tr('Ville',devis.cp ~ ' ' ~ devis.city) }}
+                                        </table>
+                                        <h3>Prestations</h3>
+                                        <table width="100%" cellpadding="0" cellspacing="0">
+                                            <tbody>
+                                                {{ macro.tr('Date de chargemment',devis.departure | date('d/m/Y')) }}
+                                                {{ macro.tr('Date de déchargement',devis.arrival | date('d/m/Y')) }}
+                                                <tr>
+                                                    <td style="width: 100%;" width="100%" colspan="2">
+                                                        <h4>Prestations choisies</h4>
+                                                        <table id="table_opts" width="100%" cellspacing="0" cellpadding="0">
+                                                            <tbody>
+                                                                <tr>
+                                                                    <td style="padding:10px;">Prestation</td>
+                                                                    <td style="text-align: center;padding:10px;">A la charge du client</td>
+                                                                    <td style="text-align: center;padding:10px;">A la charge du déménageur</td>
+                                                                </tr>
+
+                                                                {% if devis.optsArray is not null and devis.optsArray is iterable%}
+                                                                    {% for opt in devis.optsArray %}
+                                                                        <tr>
+                                                                            <td style="padding:10px;">{{ opt.title }}</td>
+                                                                            <td style="text-align: center;padding:10px;">{% if opt.val is same as(0) %}X{% endif %}</td>
+                                                                            <td style="text-align: center; padding:10px;">{% if opt.val is same as (1) %}X{% endif %}</td>
+                                                                        </tr>
+                                                                    {% endfor %}
+                                                                {% endif  %}
+                                                            </tbody>
+                                                        </table>
+                                                    </td>
+                                                </tr>
+
+                                            </tbody>
+                                        </table>
+                                        <table width="100%" cellpadding="0" cellspacing="0">
+                                                {{ macro.tr('Étage',devis.floor) }}
+                                                {{ macro.tr('Ascenseur',devis.elevator) }}
+                                                {{ macro.tr('Capacité d\'ascenceur',devis.elevatorCapacity) }}
+                                                {{ macro.tr('Distance porte arrivée camion porte de domicile (Portage )',devis.distanceTruckDoor) }}
+                                                {{ macro.tr('Soumis à autorisation de stationnement',devis.specificStation) }}
+                                                {{ macro.tr('Dificultés de stationnement',devis.stationDifilculty) }}
+                                        </table>
+                                        <h3>Volume</h3>
+                                        <table width="100%" cellpadding="0" cellspacing="0">
+                                            {{ macro.tr('Volume',devis.bulk) }}
+                                            {{ macro.tr('Source du volume',devis.volumeSource) }}
+                                            {{ macro.tr('Besoin d\'aide pour le volume ?',(devis.requestForVolume is same as ('list')) ? 'Faire une liste' : devis.requestForVolume) }}
+                                            {{ macro.tr('Droit de militaire',devis.militaryRight) }}
+                                        </table>
+                                    </td>
+                                </tr>
+                            </table>
+                        </td>
+                    </tr>
+                    <tr><td height="28"></td></tr>
+                </table>
+            </td>
+        </tr>
+    </table>
+
+{% endblock content %}
