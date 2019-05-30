@@ -68,7 +68,7 @@ $.fn.chargePhoto = function(param){
                 if(h > 0  ||(typeof(multiplicator) != 'undefined'  && number.test(multiplicator)) || $this.data('truncate') != null || typeof(name) != 'undefined'){
                     url += '/'+h;
                 }
-                if(typeof (multiplicator) != 'undefined' && number.test(multiplicator) || $this.data('truncate') != null || typeof(name) != 'undefined'){
+                if(typeof (multiplicator) != 'undefined' && number.test(multiplicator) || $this.data('truncate') != null || typeof(name) != 'undefined' || typeof(mono) != 'undefined'){
                     if(typeof (multiplicator) == 'undefined'){
                         multiplicator = 100;
                     }
@@ -81,7 +81,8 @@ $.fn.chargePhoto = function(param){
                     url += '/0';
                 }
                 let preg = new RegExp(/[a-zA-Z0-9]{6}-[a-fA-F0-9]{6}/);
-                
+
+
                 if($this.data('monochrome') != null && preg.test($this.data('monochrome'))){
                     url += '/' + $this.data('monochrome');
                 }
@@ -89,16 +90,16 @@ $.fn.chargePhoto = function(param){
                 if(typeof (name) != 'undefined'){
                     url += '/'+name;
                 }
-              
+
                 if ($this.hasClass("paralax"))
                 {
                     $this.css("background-image", "url(" + url+  ")");
                     $this.css("opacity", 1);
                 }
                 else{
-                    
+
                     $this.find("img").attr("src", url);
-                
+
                     $this.find("img").on('load', function ()
                     {
                         if($this.parents('.masonry').length)
