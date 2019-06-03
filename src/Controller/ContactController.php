@@ -212,7 +212,7 @@ class ContactController extends AbstractController
 
 
                         $webmasterMail = (new \Swift_Message($this->trans('contact.oneRequest').$_SERVER['HTTP_HOST']))
-                            ->setFrom($from)
+                            ->setFrom($contactRequest->getEmail())
                             ->setTo($infos->getMail())
                             ->setBody(
                                 $this->get('templating')->render(
