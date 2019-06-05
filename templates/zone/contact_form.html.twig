@@ -1,0 +1,6 @@
+<div id="{{ zone.type.name ~ '-' ~ zone.id }}" class="zone contact_form{{ (zone.photos.count > 0) ? ' photo paralax' : '' }}" data-id="{{ (zone.photos.count > 0) ? zone.photos[0].id : '' }}" data-monochrome="031e63-ffffff" style="background-image: url('{{ (zone.photos.count > 0) ? path('generatePhoto',{'id':zone.photos[0].id,'monochrome':'/031e63-ffffff','width':1000}) : '' }}')">
+    {{ render(controller(
+        'App\\Controller\\ContactController::contact',
+        {'_locale':locale}
+    )) }}
+</div>

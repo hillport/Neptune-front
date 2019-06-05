@@ -127,7 +127,7 @@ class ContactController extends AbstractController
                         $mailer->send($webmasterMail);
 
                         $mailer->send(
-                            (new \Swift_Message($this->trans('contact.yourRequest').$_SERVER['HTTP_HOST']))
+                            (new \Swift_Message($this->trans('contact.yourRequest').' : '.$_SERVER['HTTP_HOST']))
                                 ->setFrom($from)
                                 ->setTo($contactRequest->getEmail())
                                 ->setBody(
