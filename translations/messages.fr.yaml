@@ -23,3 +23,11 @@ firstName : Prénom
 email : E-mail
 message: Message
 demande_contact_ok: Votre demande de renseignements à bien été reçue. Nous vous répondrons dans les plus brefs délais .
+
+contact:
+    success: Votre demande de contact à bien été prise en compte
+    oneRequest:  Une demande d'information sur votre site internet :
+    yourRequest: Votre demande d'information sur le site internet :
+    errors:
+        informations: Le controller n'a pas pu récupérer les informations du site.
+        captcha: "S'il vous plait , veuillez cliquer sur le bouton : 'je ne suis pas un robot'"
