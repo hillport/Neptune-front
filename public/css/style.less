@@ -15,9 +15,15 @@ h1,h2,h3,h4,h5,h6{
 .right0{right:0}
 .photo {
 	justify-content: center;
+	background: #ededed;
 	> img {
 		object-fit: cover;
 		object-position: 50% 50%;
+		opacity: 0;
+		transition: all 500ms;
+	}
+	&.loaded{
+		opacity: 1;
 	}
 }
 p{

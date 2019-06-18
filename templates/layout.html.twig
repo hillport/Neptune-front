@@ -9,14 +9,38 @@
     <meta name="Keywords" content="{{ page.detail(locale).metaKeys }}"/>
     <meta name="viewport" content="width=device-width"/>
     {# Transformer les fichiers less en fichier css a la mise en ligne#}
-    <link rel="stylesheet/less" href="{{ asset('css/style.less') }}?v={{ random() }}"/>
+    {% if app.environment == 'prod' %}
+        <link href="{{ asset('css/style.css') }}" rel="stylesheet"/>
+    {% else %}
+    <link href="{{ asset('css/style.less') }}?v={{ random() }}" rel="stylesheet/less"/>
+        <script src="{{ asset('js/lib/less.min.js') }}"></script>
+        <script>less = { useFileCache: false }</script>
+    {% endif %}
 
-    {# Script LESS EN DEV . A enlever en prod #}
-    <script src="{{ asset('js/lib/less.min.js') }}"></script>
-    <script>less = { useFileCache: false }</script>
     {# Enlever en prod #}
     {% block css %}
     {% endblock css %}
+    <script type="text/javascript">
+        var root = "{{ asset('') }}";
+        var lang_get = "{{ locale }}";
+        var ImageObserver = null;
+        var lazyImages = null;
+        let dependances = [
+            "{{ asset('js/lib/jquery/jquery.min.js') }}",
+            "{{ asset('js/edc.min.js') }}",
+            "{{ asset('js/header.js') }}",
+            "https://fonts.googleapis.com/css?family=Roboto:200,400,500",
+            {% if jsZones is defined %}
+            {% for zone in jsZones %}
+            "{{ asset('js/zone/'~zone~'.js') }}",
+            {% endfor %}
+            {% endif %}
+
+            {% block dep %}
+            {% endblock dep %}
+        ];
+    </script>
+    <script src="{{ asset('js/chargePhoto.js') }}"/>
 </head>
 
 <body class="">
@@ -24,23 +48,7 @@
     {% block content %}
     {% endblock %}
     {% include 'footer.html.twig' %}
-    <script type="text/javascript">
-        var root = "{{ asset('') }}";
-        var lang_get = "{{ locale }}";
-        let dependances = [
-            "{{ asset('js/lib/jquery/jquery.min.js') }}",
-            "{{ asset('js/edc.js') }}",
-            "{{ asset('js/header.js') }}",
-            {% if jsZones is defined %}
-                {% for zone in jsZones %}
-                    "{{ asset('js/zone/'~zone~'.js') }}",
-                {% endfor %}
-            {% endif %}
 
-            {% block dep %}
-            {% endblock dep %}
-        ];
-    </script>
     <script src="{{ asset('js/load.js') }}" type="text/javascript"></script>
 </body>
 </html>

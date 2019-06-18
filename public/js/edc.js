@@ -336,6 +336,22 @@ $(function() {
     }
     if($('.owl-carousel').length){
 
+        if('IntersectionObserver' in window){
+            $('.owl-carousel').on('initialized.owl.carousel',function () {
+                $(this).find('.photo:not(.loaded)').each(function () {
+                    ImageObserver.observe($(this)[0]);
+                });
+            });
+        }
+        else{
+
+            $('.owl-carousel').on('initialized.owl.carousel',function () {
+                $(this).find('.photo:not(.loaded)').each(function () {
+
+                    lazyImages[lazyImages.length] = $(this)[0];
+                });
+            });
+        }
         if(!$.fn.owlCarousel){
             let config = {
                 slideSpeed : 300,
@@ -370,14 +386,11 @@ $(function() {
     }
 
     $(window).on('load',function (e) {
-        $('.photo').chargePhoto();
+        //$('.photo').chargePhoto();
         $('.apparition.hide').apparition();
     });
 
-
-
     $.edc.loadScript(scripts);
-
 
 });
 

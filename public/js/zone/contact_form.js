@@ -38,6 +38,6 @@ $('.zone.contact_form').each(function () {
                 }
 
             });
-        })
-    })
-})
+        });
+    });
+});
