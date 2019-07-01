@@ -38,7 +38,7 @@ class BaseExtension extends AbstractExtension
         $fileName = preg_replace("#[^a-zA-Z_0-9.-]#","",$fileName);
 
 
-        return $fileName.'.'.$link->getFile()->getExt();
+        return $fileName;
 
     }
 }
