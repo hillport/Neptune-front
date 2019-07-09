@@ -21,6 +21,7 @@
     {% block css %}
     {% endblock css %}
     <script type="text/javascript">
+        var webpActive = {{ webpActiveInImagick() ? 'true' : 'false' }};
         var root = "{{ asset('') }}";
         var lang_get = "{{ locale }}";
         var ImageObserver = null;
