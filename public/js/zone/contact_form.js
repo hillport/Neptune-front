@@ -21,8 +21,8 @@ $('.zone.contact_form').each(function () {
                 if (e.success) {
                     dealSuccess(form, e);
                 }
-                else if (e.errors.length > 0) {
-                    form.find('input,textarea,select,button').prop('disabled',false);
+                else if (e.errors.length) {
+                    form.find('input,textarea,select,button').removeAttr('disabled');
                     e.errors.forEach(function (key) {
 
                         let keyName = Object.keys(key);
@@ -36,8 +36,24 @@ $('.zone.contact_form').each(function () {
                         }
                     })
                 }
+                else if (e.globalErrors.length){
+                    form.find('input,textarea,select,button').removeAttr('disabled');
+                    e.globalErrors.forEach(function (key) {
+
+                        var globalErrors = form.find('.global_error');
+                        let keyValue = Object.values(key).message;
+                        if(globalErrors.length){
+                            globalErrors.empty().append(keyValue)
+                        }
+                        else{
+                            form.append($('<div class="global_error"></div>').append(keyValue));
+                        }
+
+
+                    })
+                }
 
             });
-        });
-    });
-});
+        })
+    })
+})
