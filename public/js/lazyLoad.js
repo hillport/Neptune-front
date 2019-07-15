@@ -158,7 +158,7 @@ var LazyLoad = (function(webpActive){
             var img = photo.getElementsByTagName('img');
             photo.classList.add('loaded');
             if(photo.classList.contains('paralax')){
-                photo.style.background = 'url("'+url+'")';
+                photo.style.backgroundImage = 'url("'+url+'")';
             }
             else if(img.length){
                 img[0].src = url;
@@ -170,7 +170,7 @@ var LazyLoad = (function(webpActive){
             if(src === null) return;
 
             if(photo.classList.contains('paralax')){
-                photo.style.background = 'url("'+src+'")';
+                photo.style.backgroundImage = 'url("'+src+'")';
             }
             else{
                 photo.src = src;
