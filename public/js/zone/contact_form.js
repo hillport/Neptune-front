@@ -42,6 +42,8 @@ $('.zone.contact_form').each(function () {
 
                         var globalErrors = form.find('.global_error');
                         let keyValue = Object.values(key).message;
+
+
                         if(globalErrors.length){
                             globalErrors.empty().append(keyValue)
                         }

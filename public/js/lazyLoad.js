@@ -20,7 +20,10 @@ var LazyLoad = (function(webpActive){
     });
 
     self.load = function(DOMObject){
-        self.lazyObjects = [].slice.call(DOMObject.querySelectorAll('.photo:not(.loaded),.lazy,video.lazy'));
+        self.lazyObjects = [].slice.call(DOMObject.querySelectorAll('.photo:not(.loaded),.lazy,video'));
+        [].slice.call(DOMObject.querySelectorAll('video')).forEach(function(video){
+            video.pause();
+        });
 
         let active = true;
         if('IntersectionObserver' in window){
