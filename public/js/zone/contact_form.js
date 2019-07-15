@@ -37,18 +37,18 @@ $('.zone.contact_form').each(function () {
                     })
                 }
                 else if (e.globalErrors.length){
+
                     form.find('input,textarea,select,button').removeAttr('disabled');
-                    e.globalErrors.forEach(function (key) {
+                    e.globalErrors.forEach(function (error) {
 
                         var globalErrors = form.find('.global_error');
-                        let keyValue = Object.values(key).message;
-
+                        let message = error.message;
 
                         if(globalErrors.length){
-                            globalErrors.empty().append(keyValue)
+                            globalErrors.empty().append(message)
                         }
                         else{
-                            form.append($('<div class="global_error"></div>').append(keyValue));
+                            form.append($('<div class="global_error"></div>').append(message));
                         }
 
 
