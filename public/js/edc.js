@@ -42,121 +42,7 @@ Chargement de scripts de façon automatique :
 if(typeof(root) === typeof(undefined))
     var root = '/';
 /* DEFINITION DES PLUGINS JQUERY */
-$.fn.chargePhoto = function(param){
-    let i = 0;
-    this.each(function(){
 
-        let $this = $(this);
-        let w = parseInt($this.width());
-        let h = parseInt($this.height());
-        let id = $this.data('id');
-        let number = new RegExp(/([0-9])+/);
-        let multiplicator = $this.data('multiplicator');
-        let name = $this.data('name');
-        let mono = $this.data('monochrome');
-
-
-        $this.addClass('photo_ok');
-        if(typeof(id) != 'undefined' && id != ''){
-            if(number.test(id)){
-
-                var nom = $this.attr('data-nom');
-                // Est-ce que il y a un data-nom ?
-                /* Redéfinition de l'URL pour l'envoyer , se référer au htaccess*/
-                var url = root+"photo/"+id+'/'+w;
-
-                if(h > 0  ||(typeof(multiplicator) != 'undefined'  && number.test(multiplicator)) || $this.data('truncate') != null || typeof(name) != 'undefined'){
-                    url += '/'+h;
-                }
-                if(typeof (multiplicator) != 'undefined' && number.test(multiplicator) || $this.data('truncate') != null || typeof(name) != 'undefined' || typeof(mono) != 'undefined'){
-                    if(typeof (multiplicator) == 'undefined'){
-                        multiplicator = 100;
-                    }
-                    url += '/'+multiplicator;
-                }
-                if($this.data('truncate') != null){
-                    url += "/1";
-                }
-                else if(typeof(name) != 'undefined' || typeof(mono) != 'undefined'){
-                    url += '/0';
-                }
-                let preg = new RegExp(/[a-zA-Z0-9]{6}-[a-fA-F0-9]{6}/);
-
-
-                if($this.data('monochrome') != null && preg.test($this.data('monochrome'))){
-                    url += '/' + $this.data('monochrome');
-                }
-
-                if(typeof (name) != 'undefined'){
-                    url += '/'+name;
-                }
-
-                if ($this.hasClass("paralax"))
-                {
-                    $this.css("background-image", "url(" + url+  ")");
-                    $this.css("opacity", 1);
-                }
-                else{
-
-                    $this.find("img").attr("src", url);
-
-                    $this.find("img").on('load', function ()
-                    {
-                        if($this.parents('.masonry').length)
-                        {
-                            $('.masonry').masonry('layout');
-                        }
-                        $this.find("img").css({"opacity": "1"});
-                    });
-                }
-            }
-            else{
-
-                let exp = id.split('.');
-                let ext = exp[exp.length -1];
-                let und = (typeof(nom) != 'undefined' && nom.trim() != '');
-                if(typeof(ext) != 'undefined' && ext != ''){
-                    let url = root+'photos/'+ext+'/';
-                    for(let i =0;i < exp.length -1 ;i++){
-                        url += exp[i];
-                    }
-                    url += '/'+w;
-
-                    if(h > 0) {url += '/'+h; }
-                    else if((h == 0 || h == '' ) && $this.hasClass('noratio') || und) {url += '/0'; }
-                    if($this.hasClass('noratio')) {url += '/1'; }
-                    else if(und){
-                        url += '/0';
-                    }
-
-                    if(und)
-                        url += '/'+$this.attr('data-nom');
-
-                    if ($this.hasClass("paralax"))
-                    {
-                        $this.css("background-image", "url(" + url+  ")");
-                        $this.css("opacity", 1);
-                    }
-                    else{
-                        $this.find('img').css('opacity','0');
-                        $this.find("img").attr("src", url);
-                        $this.find("img").on('load', function ()
-                        {
-                            if($this.parents('.masonry').length)
-                            {
-                                $('.masonry').masonry('layout');
-                            }
-
-
-                            $this.find("img").css({"opacity": "1"});
-                        });
-                    }
-                }
-            }
-        }
-    });
-    return this;
-};
 $.fn.mailto = function(mail){
     var tmail = /^[a-zA-Z0-9]([-_.]?[a-zA-Z0-9])*@[a-zA-Z0-9]([-_.]?[a-zA-Z0-9])*\.([a-z]{2,4})$/;
 
@@ -321,6 +207,13 @@ $(function() {
     if($('.masonry').length)
         scripts = scripts.concat([root+"js/lib/masonry-layout/dist/masonry.pkgd.min.js",function(){
             $('.masonry').masonry();
+            $('.photo:not(.loaded) img').on('load',function(){
+
+                if($(this).parents('.masonry').length && $.fn.masonry)
+                {
+                    $('.masonry').masonry('layout');
+                }
+            })
         }]);
 
 
@@ -336,19 +229,14 @@ $(function() {
     }
     if($('.owl-carousel').length){
 
-        if('IntersectionObserver' in window){
+        if(LazyLoad !== undefined){
             $('.owl-carousel').on('initialized.owl.carousel',function () {
                 $(this).find('.photo:not(.loaded)').each(function () {
-                    ImageObserver.observe($(this)[0]);
-                });
-            });
-        }
-        else{
-
-            $('.owl-carousel').on('initialized.owl.carousel',function () {
-                $(this).find('.photo:not(.loaded)').each(function () {
-
-                    lazyImages[lazyImages.length] = $(this)[0];
+                    if(LazyLoad.ImageObserver != null){
+                        LazyLoad.ImageObserver.observe($(this)[0]);
+                    }else{
+                        LazyLoad.lazyObjects[LazyLoad.lazyObjects.length] = $(this)[0];
+                    }
                 });
             });
         }
@@ -386,7 +274,7 @@ $(function() {
     }
 
     $(window).on('load',function (e) {
-        //$('.photo').chargePhoto();
+
         $('.apparition.hide').apparition();
     });
 

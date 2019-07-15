@@ -22,7 +22,8 @@ class BaseExtension extends AbstractExtension
     public function getFunctions()
     {
         return array(
-            new TwigFunction('fileName',array($this,'fileName'))
+            new TwigFunction('fileName',array($this,'fileName')),
+            new TwigFunction('fileGetContents',array($this,'fileGetContents'))
         );
     }
     public function fileName(AbstractFileLink $link,$locale) : string {
@@ -35,10 +36,14 @@ class BaseExtension extends AbstractExtension
             $fileName
         );
 
-        $fileName = preg_replace("#[^a-zA-Z_0-9.-]#","",$fileName);
+        $fileName = preg_replace("#[^a-zA-Z_0-9.-]#","",$fileName) || '0';
 
 
-        return $fileName;
+        return $fileName.'.'.$link->getFile()->getExt();
 
+    }
+
+    public function fileGetContents($path){
+        return file_get_contents($path);
     }
 }
