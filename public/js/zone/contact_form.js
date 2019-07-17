@@ -1,4 +1,5 @@
 function dealSuccess(form, data) {
+    form.find('.global_error,.error').empty();
     form.append("<div class='success'>" + data.message + "</div>");
     form.find('input,textarea,select').prop('disabled',true);
 }
