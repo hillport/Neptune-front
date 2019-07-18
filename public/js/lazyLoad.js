@@ -116,11 +116,16 @@ var LazyLoad = (function(webpActive){
 
             var w = parseInt(photo.offsetWidth);
             var h = parseInt(photo.offsetHeight);
+
+            if(photo.classList.contains('paralax')){
+                h = document.body.clientHeight;
+            }
             var multiplicator =   (photo.getAttribute('data-multiplicator') !== null) ? parseInt(photo.getAttribute('data-multiplicator')) : null ;
             var photoName = photo.getAttribute('data-name');
             var monochrome = photo.getAttribute('data-monochrome');
             var truncate = photo.getAttribute('data-truncate');
             var url = ((typeof(root) != 'undefined') ? root : '/') +'photo/'+id+'/'+w;
+
             if(photoName === null)
                 photoName = '0.jpeg';
 
@@ -157,7 +162,7 @@ var LazyLoad = (function(webpActive){
             }
             var img = photo.getElementsByTagName('img');
             photo.classList.add('loaded');
-            if(photo.classList.contains('paralax')){
+            if(photo.classList.contains('paralax') || photo.classList.contains('background')){
                 photo.style.backgroundImage = 'url("'+url+'")';
             }
             else if(img.length){
@@ -169,7 +174,7 @@ var LazyLoad = (function(webpActive){
             photo.classList.remove('lazy');
             if(src === null) return;
 
-            if(photo.classList.contains('paralax')){
+            if(photo.classList.contains('paralax') || photo.classList.contains('background')){
                 photo.style.backgroundImage = 'url("'+src+'")';
             }
             else{
