@@ -118,7 +118,7 @@ var LazyLoad = (function(webpActive){
             var h = parseInt(photo.offsetHeight);
 
             if(photo.classList.contains('paralax')){
-                h = document.body.clientHeight;
+                h = window.innerHeight;
             }
             var multiplicator =   (photo.getAttribute('data-multiplicator') !== null) ? parseInt(photo.getAttribute('data-multiplicator')) : null ;
             var photoName = photo.getAttribute('data-name');
