@@ -1,12 +1,10 @@
-
 {% trans_default_domain 'app' %}
 <!doctype html>
 <html lang="{{ locale }}">
 <head>
     <meta charset="utf-8"/>
-    <title>{{ page.detail(locale).metaTitle }}</title>
-    <meta name="Description" content="{{ page.detail(locale).metaDesc }}"/>
-    <meta name="Keywords" content="{{ page.detail(locale).metaKeys }}"/>
+    <title>{{ (page.detail(locale).metaTitle is null) ? (page.detail(locale).title ~ ' | ' ~ infos.name ~ infos.city) : page.detail(locale).metaTitle  }}</title>
+    <meta name="Description" content="{{ getFirstText(page,locale) | striptags | raw }}"/>
     <meta name="viewport" content="width=device-width"/>
     {# Transformer les fichiers less en fichier css a la mise en ligne#}
     {% if app.environment == 'prod' %}

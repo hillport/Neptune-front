@@ -23,7 +23,8 @@ class BaseExtension extends AbstractExtension
     {
         return array(
             new TwigFunction('fileName',array($this,'fileName')),
-            new TwigFunction('fileGetContents',array($this,'fileGetContents'))
+            new TwigFunction('fileGetContents',array($this,'fileGetContents')),
+            new TwigFunction('getFirstText',array($this,'getFirstText'))
         );
     }
     public function fileName(AbstractFileLink $link,$locale) : string {
@@ -46,4 +47,19 @@ class BaseExtension extends AbstractExtension
     public function fileGetContents($path){
         return file_get_contents($path);
     }
+        
+    public function getFirstText(Page $page,$locale)
+    {
+        if (null !== $text = $page->getDetail($locale)->getMetaDesc())
+            return $text;
+        else if (null !== $text = $page->getDetail($locale)->getDescription())
+            return $text;
+
+        foreach ($page->getZones() as $zone) {
+            if (null !== $text = $zone->getDetail($locale)->getDescription()) {
+                return $text;
+            }
+        }
+    }
+
 }
