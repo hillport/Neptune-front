@@ -15,6 +15,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Twig\Extension\AbstractExtension;
 use Twig\TwigFilter;
 use Twig\TwigFunction;
+use ScyLabs\NeptuneBundle\Entity\Page;
 
 class BaseExtension extends AbstractExtension
 {
