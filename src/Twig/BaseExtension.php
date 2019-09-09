@@ -10,6 +10,7 @@ namespace App\Twig;
 
 
 use ScyLabs\NeptuneBundle\AbstractEntity\AbstractDetail;
+use ScyLabs\NeptuneBundle\AbstractEntity\AbstractElem;
 use ScyLabs\NeptuneBundle\AbstractEntity\AbstractFileLink;
 use Symfony\Component\HttpFoundation\Request;
 use Twig\Extension\AbstractExtension;
@@ -49,7 +50,7 @@ class BaseExtension extends AbstractExtension
         return file_get_contents($path);
     }
         
-    public function getFirstText(Page $page,$locale)
+    public function getFirstText(AbstractElem $page,$locale)
     {
         if (null !== $text = $page->getDetail($locale)->getMetaDesc())
             return $text;
