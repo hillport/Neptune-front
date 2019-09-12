@@ -48,7 +48,7 @@ var LazyLoad = (function(webpActive){
                         }
                     }
                 })
-            });
+            },{rootMargin: "30%"});
             self.lazyObjects.forEach(function(lazyObject){
                 self.ImageObserver.observe(lazyObject);
             });
@@ -116,16 +116,15 @@ var LazyLoad = (function(webpActive){
 
             var w = parseInt(photo.offsetWidth);
             var h = parseInt(photo.offsetHeight);
-
             if(photo.classList.contains('paralax')){
                 h = window.innerHeight;
             }
+
             var multiplicator =   (photo.getAttribute('data-multiplicator') !== null) ? parseInt(photo.getAttribute('data-multiplicator')) : null ;
             var photoName = photo.getAttribute('data-name');
             var monochrome = photo.getAttribute('data-monochrome');
             var truncate = photo.getAttribute('data-truncate');
             var url = ((typeof(root) != 'undefined') ? root : '/') +'photo/'+id+'/'+w;
-
             if(photoName === null)
                 photoName = '0.jpeg';
 
