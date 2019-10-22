@@ -1,6 +1,6 @@
 /**
  * Autoplay Plugin
- * @version 2.3.2
+ * @version 2.3.4
  * @author Bartosz Wojciechowski
  * @author Artus Kolanowski
  * @author David Deutsch
@@ -134,7 +134,7 @@
 			this._timeout * (Math.round(this.read() / this._timeout) + 1) - this.read()
 		);
 
-		if (this._core.is('busy') || this._core.is('interacting') || document.hidden) {
+		if (this._core.is('interacting') || document.hidden) {
 			return;
 		}
 		this._core.next(speed || this._core.settings.autoplaySpeed);

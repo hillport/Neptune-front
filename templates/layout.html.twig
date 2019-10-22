@@ -23,14 +23,30 @@
         var root = "{{ asset('') }}";
         var lang_get = "{{ locale }}";
         let dependances = [
-            "{{ asset('js/lib/jquery/jquery.min.js') }}",
-            "{{ asset('js/edc.min.js') }}",
-            "{{ asset('js/header.js') }}",
-            "https://fonts.googleapis.com/css?family=Roboto:200,400,500",
+            {
+                src: "{{ asset('js/edc.min.js') }}",
+                require: [
+                    {
+                        name: "jQuery",
+                        sources: [
+                            {
+                                src: "{{ asset('js/lib/jquery/jquery.min.js') }}"
+                            }
+                        ]
+                    }
+                ]
+            },
+            {
+                src: "{{ asset('js/header.js') }}"
+            },
             {% if jsZones is defined %}
-            {% for zone in jsZones %}
-            "{{ asset('js/zone/'~zone~'.js') }}",
-            {% endfor %}
+                {% for zone in jsZones %}
+                    {
+                        src: "{{ asset('js/zone/'~zone~'.js') }}",
+                        require: []
+                    },
+
+                {% endfor %}
             {% endif %}
 
             {% block dep %}

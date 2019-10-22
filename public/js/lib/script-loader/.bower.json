@@ -1,8 +1,8 @@
 {
   "name": "script-loader",
-  "description": "Script loading without callbacks",
+  "description": "Script async loading",
   "main": [
-    "dist/load_script.js"
+    "dist/loadScript.js"
   ],
   "dependencies": {},
   "devDependencies": {},
@@ -18,7 +18,7 @@
     "async"
   ],
   "authors": [
-    "Santanas2b santanas2b@gmail.com"
+    "Alexandre Sciacca alexandre.sciacca@gmail.com"
   ],
   "license": "MIT",
   "ignore": [
@@ -30,11 +30,11 @@
   ],
   "private": false,
   "homepage": "https://github.com/santanas2b/script-loader",
-  "_release": "104bc564a6",
+  "_release": "7f51905bf8",
   "_resolution": {
     "type": "branch",
     "branch": "master",
-    "commit": "104bc564a641856676fde04e77d0b27114a4318c"
+    "commit": "7f51905bf852b03779d712fdf2a79dfdabd7e301"
   },
   "_source": "https://github.com/santanas2b/script-loader.git",
   "_target": "*",

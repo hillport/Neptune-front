@@ -10,13 +10,14 @@ namespace App\Controller;
 
 
 use ScyLabs\NeptuneBundle\Entity\Document;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\ResponseHeaderBag;
 use Symfony\Component\Routing\Annotation\Route;
 
-class ApiController extends Controller
+class ApiController extends AbstractController
 {
     /**
      * @Route("/downloads/{id}/{name}",name="api_download",requirements={"id"="\d+","name"=".*"})

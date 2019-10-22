@@ -5,7 +5,8 @@ element.defer = "defer";
 document.body.appendChild(element);
 element.onload = function()
 {
+    scriptLoader = new ScriptLoader();
+    scriptLoader.add(dependances);
+    scriptLoader.load();
 
-    loadScript(dependances);
-
-}
+};

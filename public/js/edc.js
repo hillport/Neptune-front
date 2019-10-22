@@ -111,8 +111,14 @@ $.edc ={
     fin_charge_photo : false,
     compteur_script_ajax: 0,
     lang : (typeof(lang_get) == "undefined") ? 'fr' : lang_get,
-    fichiers_fancy:[root+"js/lib/fancybox/dist/jquery.fancybox.min.css",
-        root+"js/lib/fancybox/dist/jquery.fancybox.min.js"],
+    fichiers_fancy:[
+        {
+            src: root+"js/lib/fancybox/dist/jquery.fancybox.min.js"
+        },
+        {
+            src: root+"js/lib/fancybox/dist/jquery.fancybox.min.css"
+        }
+        ],
     /* FIN VARIABLES */
     /* Functions */
     send:function(url,type='GET',data='',fn = function(e){}){
@@ -167,17 +173,15 @@ $.edc ={
 
         if($.fn.fancybox)
             fancy();
-        else
-            $this.loadScript($this.fichiers_fancy,fancy);
+        else{
+            scriptLoader.add($.edc.fichiers_fancy)
+            scriptLoader.load();
+        }
 
     }
 
 };
 
-if(typeof(loadScript) === typeof('function'))
-    $.edc.loadScript = loadScript;
-else
-    $.edc.loadScript = function (e,t,n){if("function"==typeof t?(n=t,t=0):void 0===t&&(t=0),"string"==typeof e&&(e=new Array(e)),"object"==typeof e[t]&&($.edc.loadScript(e[t][0],0,e[t][1]),t++),"function"==typeof e[t]&&(e[t](),t++),void 0!==e[t]){var o=new RegExp(/\.js/),i=new RegExp(/\.css/),a=new RegExp(/player_api/);if(t<e.length)if(o.test(e[t])||a.test(e[t])){var c=document.createElement("script");c.src=e[t],c.type="text/javascript",c.defer="defer",document.body.appendChild(c),c.onload=function(){$.edc.loadScript(e,t+1,n)}}else if(i.test(e[t])){var d=document.createElement("link");d.href=e[t],d.rel="stylesheet",d.media="all",document.head.appendChild(d),d.onload=function(){$.edc.loadScript(e,t+1,n)}}else $.edc.loadScript(e,t+1,n)}else"function"==typeof n&&n()};
 
 /* FIN DE DEFINITION DU NAMESPACE*/
 
@@ -189,70 +193,69 @@ else
 var scripts = new Array() ;
 
 $(function() {
-    $('.apparition').addClass('hide');
+
     if($('.fa,.fab,.far,.fal').length)
     {
-        scripts.push(root+"js/lib/fontawesome-pro/css/all.min.css");
+        scripts.push({src: root+"js/lib/fontawesome-pro/css/all.min.css"});
     }
 
     if($('.fancy').length)
     {
-        scripts = scripts.concat([
-            root+"js/lib/fancybox/dist/jquery.fancybox.min.css",
-            root+"js/lib/fancybox/dist/jquery.fancybox.min.js"
-            ,function(){
+        scripts.push({
+            src: root+"js/lib/fancybox/dist/jquery.fancybox.min.js",
+            callback: function(){
                 $('.fancy').fancybox();
-            }]);
+            },
+            require: [
+                {
+                    sources: [
+                        root+"js/lib/fancybox/dist/jquery.fancybox.min.css"
+                    ]
+                }
+            ]
+        })
     }
     if($('.masonry').length)
-        scripts = scripts.concat([root+"js/lib/masonry-layout/dist/masonry.pkgd.min.js",function(){
-            $('.masonry').masonry();
-            $('.photo:not(.loaded) img').on('load',function(){
-
-                if($(this).parents('.masonry').length && $.fn.masonry)
-                {
-                    $('.masonry').masonry('layout');
-                }
-            })
-        }]);
+        scripts.push({
+            src: root+"js/lib/masonry-layout/dist/masonry.pkgd.min.js",
+            callback: function(){
+                $('.masonry').masonry();
+            }
+        })
 
 
     if($('.superfish').length)
     {
-        scripts = scripts.concat([
-            root+"js/lib/superfish/dist/css/superfish.css",
-            [root+"js/lib/superfish/dist/js/superfish.min.js",
-                function(){
-                    $('.superfish').superfish();
-                }]
-        ]);
+        scripts.push({
+            src: root+"js/lib/superfish/dist/js/superfish.min.js",
+            callback: function(){
+                $('.superfish').superfish();
+            },
+            require: [
+                {
+                    sources: [root+"js/lib/superfish/dist/css/superfish.css"]
+                }
+            ]
+        });
     }
-    if($('.owl-carousel').length){
 
-        if(LazyLoad !== undefined){
-            $('.owl-carousel').on('initialized.owl.carousel',function () {
-                $(this).find('.photo:not(.loaded)').each(function () {
-                    if(LazyLoad.ImageObserver != null){
-                        LazyLoad.ImageObserver.observe($(this)[0]);
-                    }else{
-                        LazyLoad.lazyObjects[LazyLoad.lazyObjects.length] = $(this)[0];
-                    }
-                });
-            });
+    if($('.owl-carousel').length){
+        let config = {
+            slideSpeed : 300,
+            paginationSpeed : 400,
+            items : 1,
+            dots: true,
+            nav: false,
+            autoplay: true,
+            animateOut: 'fadeOut',
+            autoplayTimeout: 6000,
+            loop:true,
+            mouseDrag:false,
+        };
+        if($.fn.owlCarousel){
+            $('.slider').owlCarousel(config);
         }
-        if(!$.fn.owlCarousel){
-            let config = {
-                slideSpeed : 300,
-                paginationSpeed : 400,
-                items : 1,
-                dots: true,
-                nav: false,
-                autoplay: true,
-                animateOut: 'fadeOut',
-                autoplayTimeout: 6000,
-                loop:true,
-                mouseDrag:false,
-            };
+        else{
             scripts = scripts.concat([
                 root+"js/lib/owl.carousel/dist/assets/owl.carousel.css",
                 [root+"js/lib/owl.carousel/dist/owl.carousel.js", function(){
@@ -260,8 +263,8 @@ $(function() {
                 }]
             ])
         }
-    }
 
+    }
 
 
     $(window).on('scroll',function(){
@@ -270,15 +273,18 @@ $(function() {
 
     if($('#g-recaptcha').length ||$('.g-recaptcha').length)
     {
-        scripts.push("https://www.google.com/recaptcha/api.js?hl="+$.edc.lang)
+        scripts.push({
+            src: "https://www.google.com/recaptcha/api.js?hl="+$.edc.lang
+        })
     }
 
     $(window).on('load',function (e) {
-
         $('.apparition.hide').apparition();
     });
 
-    $.edc.loadScript(scripts);
+
+    scriptLoader.add(scripts);
+    scriptLoader.load();
 
 });
 

@@ -1,6 +1,6 @@
 /**
  * Owl carousel
- * @version 2.3.2
+ * @version 2.3.4
  * @author Bartosz Wojciechowski
  * @author David Deutsch
  * @license The MIT License (MIT)
@@ -183,6 +183,7 @@
 		loop: false,
 		center: false,
 		rewind: false,
+		checkVisibility: true,
 
 		mouseDrag: true,
 		touchDrag: true,
@@ -208,6 +209,7 @@
 		responsiveBaseElement: window,
 
 		fallbackEasing: 'swing',
+		slideTransition: '',
 
 		info: false,
 
@@ -452,8 +454,11 @@
 		this.$element.addClass(this.options.loadingClass);
 
 		// create stage
-		this.$stage = $('<' + this.settings.stageElement + ' class="' + this.settings.stageClass + '"/>')
-			.wrap('<div class="' + this.settings.stageOuterClass + '"/>');
+		this.$stage = $('<' + this.settings.stageElement + '>', {
+			"class": this.settings.stageClass
+		}).wrap( $( '<div/>', {
+			"class": this.settings.stageOuterClass
+		}));
 
 		// append stage
 		this.$element.append(this.$stage.parent());
@@ -938,7 +943,9 @@
 		if ($.support.transform3d && $.support.transition) {
 			this.$stage.css({
 				transform: 'translate3d(' + coordinate + 'px,0px,0px)',
-				transition: (this.speed() / 1000) + 's'
+				transition: (this.speed() / 1000) + 's' + (
+					this.settings.slideTransition ? ' ' + this.settings.slideTransition : ''
+				)
 			});
 		} else if (animate) {
 			this.$stage.animate({

@@ -1,8 +1,8 @@
 {
 	"name": "script-loader",
-	"description": "Script loading without callbacks",
+	"description": "Script async loading",
 	"main": [
-		"dist/load_script.js"
+		"dist/loadScript.js"
 	],
 	"dependencies": {
 	},
@@ -20,7 +20,7 @@
 		"async"
 	],
 	"authors": [
-		"Santanas2b santanas2b@gmail.com"
+		"Alexandre Sciacca alexandre.sciacca@gmail.com"
 	],
 	"license": "MIT",
 	"ignore": [
