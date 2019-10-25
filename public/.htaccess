@@ -18,7 +18,7 @@ DirectoryIndex index.php
 </IfModule>
 
 <IfModule mod_deflate.c>
-	<FilesMatch "\.(html|php|txt|xml|js|css)$">
+	<FilesMatch "\.(html|php|txt|xml|js|css|jpeg|png|jpg|svg|json|otf|ttf)$">
 	SetOutputFilter DEFLATE
 </FilesMatch>
 
