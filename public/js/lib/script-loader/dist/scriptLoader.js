@@ -78,9 +78,11 @@
         /* load Alls scripts not loaded */
         this.load = function(){
 
+
             if(this.scripts.length === 0 || this.inProgress === true)
                 return;
             this.inProgress = true;
+
 
             loadScript.call(this);
         }
@@ -105,8 +107,10 @@
             return;
         }
 
-        if(script.loaded === true)
-            return;
+        if(script.loaded === true){
+            loadScript.call(scriptLoader,offset + 1);
+            return
+        }
 
         script.loaded = true;
         const patterns = {
@@ -170,15 +174,18 @@
 
             document.body.appendChild(element);
         }
+        element.onload = function(){
+
+            if(typeof(script.callback) === 'function')
+                script.callback();
+            if(script.parent === true)
+                loadScript.call(scriptLoader,offset + 1);
+        }
         if(script.parent === false){
             loadScript.call(scriptLoader,offset + 1);
             return;
         }
-        element.onload = function(){
-            if(typeof(script.callback) === 'function')
-                script.callback();
-            loadScript.call(scriptLoader,offset + 1);
-        }
+
     }
     /* Define opts by defaults */
     function setDefaults(defaults,opts){
