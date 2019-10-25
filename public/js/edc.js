@@ -196,48 +196,41 @@ $(function() {
 
     if($('.fa,.fab,.far,.fal').length)
     {
-        scripts.push({src: root+"js/lib/fontawesome-pro/css/all.min.css"});
+        scriptLoader.add({src: root+"js/lib/fontawesome-pro/css/all.min.css"});
     }
 
     if($('.fancy').length)
     {
-        scripts.push({
-            src: root+"js/lib/fancybox/dist/jquery.fancybox.min.js",
-            callback: function(){
-                $('.fancy').fancybox();
+        scriptLoader.add([
+            {
+                src: root+"js/lib/fancybox/dist/jquery.fancybox.min.css"
             },
-            require: [
-                {
-                    sources: [
-                        root+"js/lib/fancybox/dist/jquery.fancybox.min.css"
-                    ]
+            {
+                src: root+"js/lib/fancybox/dist/jquery.fancybox.min.js",
+                callback: function(){
+                    $('.fancy').fancybox();
                 }
-            ]
-        })
-    }
-    if($('.masonry').length)
-        scripts.push({
-            src: root+"js/lib/masonry-layout/dist/masonry.pkgd.min.js",
-            callback: function(){
-                $('.masonry').masonry();
             }
-        })
 
+        ]);
 
-    if($('.superfish').length)
-    {
-        scripts.push({
-            src: root+"js/lib/superfish/dist/js/superfish.min.js",
-            callback: function(){
-                $('.superfish').superfish();
-            },
-            require: [
-                {
-                    sources: [root+"js/lib/superfish/dist/css/superfish.css"]
-                }
-            ]
-        });
     }
+    if($('.masonry').length )
+    {
+        scriptLoader.add(
+            {
+                src: root+'js/lib/packery/dist/packery.pkgd.min.js',
+                callback: function(){
+
+                    $('.masonry').packery({
+                        itemSelector: '.grid-item',
+                        percentPosition: true
+                    })
+
+                }
+            });
+    }
+
 
     if($('.owl-carousel').length){
         let config = {
@@ -256,11 +249,16 @@ $(function() {
             $('.slider').owlCarousel(config);
         }
         else{
-            scripts = scripts.concat([
-                root+"js/lib/owl.carousel/dist/assets/owl.carousel.css",
-                [root+"js/lib/owl.carousel/dist/owl.carousel.js", function(){
-                    $('.slider').owlCarousel(config);
-                }]
+            scriptLoader.add([
+                {
+                    src: root+"js/lib/owl.carousel/dist/assets/owl.carousel.css"
+                },
+                {
+                    src: root+"js/lib/owl.carousel/dist/owl.carousel.js",
+                    callback: function(){
+                        $('.slider').owlCarousel(config);
+                    }
+                },
             ])
         }
 
@@ -273,7 +271,7 @@ $(function() {
 
     if($('#g-recaptcha').length ||$('.g-recaptcha').length)
     {
-        scripts.push({
+        scriptLoader.add({
             src: "https://www.google.com/recaptcha/api.js?hl="+$.edc.lang
         })
     }
@@ -283,7 +281,6 @@ $(function() {
     });
 
 
-    scriptLoader.add(scripts);
     scriptLoader.load();
 
 });
