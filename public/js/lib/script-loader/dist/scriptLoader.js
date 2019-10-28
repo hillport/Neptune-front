@@ -145,16 +145,19 @@
             loadScript.call(this,offset +1);
             return;
         }
-
+        if(script.preload){
+            var preload = document.createElement('link');
+            preload.rel = "preload";
+            preload.as = (css === true) ? "style" : 'script';
+            preload.href = script.src;
+            document.head.appendChild(preload);
+        }
         if(css === true){
             var element = document.createElement('link');
             element.href = script.src;
             element.rel = 'stylesheet';
             element.media = 'all';
-            if(script.preload)  {
-                element.rel = "preload";
-                element.as = "style";
-            }
+
             document.head.appendChild(element);
 
         }else{
@@ -167,10 +170,6 @@
             element.src = script.src;
             element.type = "text/javascript";
             element.async = true;
-            if(script.preload){
-                element.rel = "preload";
-                element.as = "script"
-            }
 
             document.body.appendChild(element);
         }

@@ -233,6 +233,19 @@ $(function() {
 
 
     if($('.owl-carousel').length){
+
+        if(LazyLoad !== undefined) {
+            $('.owl-carousel').on('initialized.owl.carousel', function () {
+                $(this).find('.photo:not(.loaded)').each(function () {
+                    if (LazyLoad.ImageObserver != null) {
+                        LazyLoad.ImageObserver.observe($(this)[0]);
+                    }
+                    else {
+                        LazyLoad.lazyObjects[LazyLoad.lazyObjects.length] = $(this)[0];
+                    }
+                });
+            });
+        }
         let config = {
             slideSpeed : 300,
             paginationSpeed : 400,
