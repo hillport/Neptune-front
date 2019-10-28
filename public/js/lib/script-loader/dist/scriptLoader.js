@@ -161,12 +161,7 @@
             document.head.appendChild(element);
 
         }else{
-            if(script.preload){
-                var element = document.createElement('link');
-            }else{
-                var element = document.createElement('script');
-            }
-
+            var element = document.createElement('script');
             element.src = script.src;
             element.type = "text/javascript";
             element.async = true;
