@@ -6,7 +6,7 @@
  * Time: 08:47
  */
 
-namespace ScyLabs\Controller;
+namespace App\Controller;
 
 
 use ScyLabs\NeptuneBundle\Controller\BaseController;
