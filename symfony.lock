@@ -110,6 +110,9 @@
     "monolog/monolog": {
         "version": "1.23.0"
     },
+    "natxet/cssmin": {
+        "version": "v3.0.6"
+    },
     "nikic/php-parser": {
         "version": "v4.0.3"
     },
@@ -118,6 +121,9 @@
     },
     "ocramius/proxy-manager": {
         "version": "2.1.1"
+    },
+    "oyejorge/less.php": {
+        "version": "v1.7.0.14"
     },
     "paragonie/random_compat": {
         "version": "v2.0.17"
@@ -145,6 +151,9 @@
     },
     "psr/simple-cache": {
         "version": "1.0.1"
+    },
+    "scylabs/css2less": {
+        "version": "1.0.0"
     },
     "scylabs/neptune-bundle": {
         "version": "dev-master"

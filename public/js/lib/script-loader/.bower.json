@@ -30,14 +30,15 @@
   ],
   "private": false,
   "homepage": "https://github.com/santanas2b/script-loader",
-  "_release": "7f51905bf8",
+  "version": "1.0.0",
+  "_release": "1.0.0",
   "_resolution": {
-    "type": "branch",
-    "branch": "master",
-    "commit": "7f51905bf852b03779d712fdf2a79dfdabd7e301"
+    "type": "version",
+    "tag": "v1.0.0",
+    "commit": "4662c4a8e2c0fe75cc1a5a8dd20b3358d423b243"
   },
   "_source": "https://github.com/santanas2b/script-loader.git",
-  "_target": "*",
+  "_target": "^1.0.0",
   "_originalSource": "santanas2b/script-loader",
   "_direct": true
 }
