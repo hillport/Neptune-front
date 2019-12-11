@@ -174,7 +174,8 @@ $.edc ={
         if($.fn.fancybox)
             fancy();
         else{
-            scriptLoader.add($.edc.fichiers_fancy)
+            $.edc.fichiers_fancy[0].callback = fancy;
+            scriptLoader.add($.edc.fichiers_fancy);
             scriptLoader.load();
         }
 
@@ -196,14 +197,15 @@ $(function() {
 
     if($('.fa,.fab,.far,.fal').length)
     {
-        scriptLoader.add({src: root+"js/lib/fontawesome-pro/css/all.min.css"});
+        scriptLoader.add({src: root+"js/lib/fontawesome-pro/css/all.min.css",preload:true});
     }
 
     if($('.fancy').length)
     {
         scriptLoader.add([
             {
-                src: root+"js/lib/fancybox/dist/jquery.fancybox.min.css"
+                src: root+"js/lib/fancybox/dist/jquery.fancybox.min.css",
+                preload:true
             },
             {
                 src: root+"js/lib/fancybox/dist/jquery.fancybox.min.js",
