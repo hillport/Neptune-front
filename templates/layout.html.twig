@@ -2,6 +2,16 @@
 <!doctype html>
 <html lang="{{ locale }}">
 <head>
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id={{ infos.analyticsId }}"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+
+        gtag('config', '{{ infos.analyticsId }}');
+    </script>
+
     <meta charset="utf-8"/>
     <title>{{ (page.detail(locale).metaTitle is null) ? (page.detail(locale).title ~ ' | ' ~ infos.name ~' - ' ~infos.city) : page.detail(locale).metaTitle  }}</title>
     <meta name="Description" content="{{ getFirstText(page,locale) | striptags | raw }}"/>
